@@ -1,10 +1,11 @@
 <script setup>
+import saleFunciton from '@/components/saleFunciton.vue'
 
 
 </script>
 
 <template>
-  <h1>home page</h1>
+  <saleFunciton/>
 
 </template>
 

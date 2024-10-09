@@ -1,17 +1,29 @@
 <script setup>
-import { RouterView , RouterLink } from 'vue-router';
+import { RouterView } from 'vue-router';
+import  department from '@/components/department.vue';
 
 </script>
 
 <template>
-  <h1>setting website</h1>
-  <RouterView/>
-  <ul>
-    <li><RouterLink to="/home">home</RouterLink></li>
-  </ul>
+  <department />
+  <div class="contentSection div80">
+    <RouterView/>
+
+  </div>
+
+
 
 </template>
 
-<style scoped>
+
+<style lang="scss" scoped>
+
+.contentSection{
+  margin-bottom: 5rem;
+  min-height: 80vh;
+  box-shadow: 0px 0px 15px $gray10;
+
+  border-radius: 2rem;
+}
 
 </style>

@@ -28,3 +28,9 @@
     align-items: $vertical;
 
 }
+
+
+@mixin gridLayout($NumberOfCells,$size){
+    display: grid;
+    grid-template-columns: repeat($NumberOfCells,$size);
+}
