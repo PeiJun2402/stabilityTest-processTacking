@@ -19,6 +19,7 @@ import  department from '@/components/department.vue';
 <style lang="scss" scoped>
 
 .contentSection{
+  padding: 2rem 3rem; 
   margin-bottom: 5rem;
   min-height: 80vh;
   box-shadow: 0px 0px 15px $gray10;
