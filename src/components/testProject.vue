@@ -1,11 +1,34 @@
 <script setup>
 import saleEdit from '@/components/saleEdit.vue'
+import { ref,computed } from 'vue';
+import { defineProps } from 'vue';
+
+defineProps({
+    clientName: {
+        required: true,
+        default: '未輸入客戶名稱'
+    },
+    dueDate: {
+        required: true,
+        default: '未輸入日期'
+    },
+    testStage: {
+        required: true,
+        default: '未執行'
+    },
+    borderColor: {
+        required: true,
+        default: '#58A9C3'
+    },
+})
+
+
 
 
 </script>
 
 <template>
-    <div class="testProject">
+    <div class="testProject":style="{ border: borderColor + ' 2px solid' }">
         <div class="displayItem">
             <div class="button">
                 <button class="editBtn"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
@@ -14,15 +37,15 @@ import saleEdit from '@/components/saleEdit.vue'
             <div class="displayInfo">
                 <div class="clientName">
                     <p>客戶名稱</p>
-                    <h3>miily</h3>
+                    <h3>{{ clientName }}</h3>
                 </div>
                 <div class="dueDate">
                     <p>預計生產日期</p>
-                    <h3>2024/11/06</h3>
+                    <h3>{{ dueDate }}</h3>
                 </div>
                 <div class="testStage">
                     <p>檢測階段</p>
-                    <h3>Test1</h3>
+                    <h3>{{ testStage }}</h3>
                 </div>
             </div>
         </div>
@@ -30,7 +53,7 @@ import saleEdit from '@/components/saleEdit.vue'
             <saleEdit/>
         </div>
     </div>
-  
+    <!-- :style="TestitemStore.borderStyle" -->
 
 </template>
 
@@ -38,7 +61,7 @@ import saleEdit from '@/components/saleEdit.vue'
 .testProject{
     padding: 1rem;
     margin-top: 2rem;
-    border: $pointColor 2px solid;
+    // border: $pointColor 2px solid;
     border-radius: 2rem;
     
     display: grid;

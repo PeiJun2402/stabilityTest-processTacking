@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const testQty = ref({
     untest:8,
@@ -12,10 +13,12 @@ const testQty = ref({
 
 <template>
   <div class="saleData">
-    <div class="testButton">
-        <h3>APPLY FOR TESTING</h3>
-        <p>申請安定性測試</p>
-    </div>
+    <RouterLink to="/applyTestForm">
+        <div class="testButton">
+            <h3>APPLY FOR TESTING</h3>
+            <p>申請安定性測試</p>
+        </div>
+    </RouterLink>
     <div class="untest">
         <p>未進行檢測</p>
         <h1>{{testQty.untest}}</h1>

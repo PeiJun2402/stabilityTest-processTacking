@@ -3,6 +3,7 @@ import { createRouter , createWebHistory }from 'vue-router'
 import Development from '@/view/Development.vue';  
 import Sale from '@/view/Sale.vue';  
 import Manufacture from '@/view/Manufacture.vue';  
+import ApplyTestForm from '@/view/ApplyTestForm.vue';  
 
 
 const router = createRouter({
@@ -21,6 +22,10 @@ const router = createRouter({
         { path:'/manufacture',
         name:'Manufacture',
         component: Manufacture
+        },
+        { path:'/applyTestForm',
+        name:'ApplyTestForm',
+        component: ApplyTestForm
         },
 
     ]

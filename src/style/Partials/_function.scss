@@ -34,3 +34,26 @@
     display: grid;
     grid-template-columns: repeat($NumberOfCells,$size);
 }
+
+@mixin labelText{
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+
+    margin-bottom: 0.5rem;
+}
+
+
+@mixin buttonbStyle($border,$BGCcolor,$color){
+    border: $border;
+    border-radius: 2rem;
+    background-color: $BGCcolor;
+    color: $color;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+
+    &:hover{
+        transform: translateY(-10px);
+    }
+}
