@@ -4,6 +4,7 @@ import Development from '@/view/Development.vue';
 import Sale from '@/view/Sale.vue';  
 import Manufacture from '@/view/Manufacture.vue';  
 import ApplyTestForm from '@/view/ApplyTestForm.vue';  
+import EditForm from '@/view/EditForm.vue'
 
 
 const router = createRouter({
@@ -26,6 +27,10 @@ const router = createRouter({
         { path:'/applyTestForm',
         name:'ApplyTestForm',
         component: ApplyTestForm
+        },
+        { path:'/editForm/:id',
+        name:'EditForm',
+        component: EditForm
         },
 
     ]

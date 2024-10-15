@@ -7,15 +7,6 @@ import { onMounted } from 'vue';
 const TestitemStore = useTestitemStore();
 
 
-onMounted(async()=>{
-  TestitemStore.testItems = []
-  await TestitemStore.getData();
-
-})
-
-
-
-
 
 
 </script>

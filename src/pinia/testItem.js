@@ -36,13 +36,21 @@ const getData = async()=>{
 
 
 
+
   //----------------- computed ----------------------------
   //border color
   const borderStyle = computed(()=>{
-    if(testItems.value.testStage !== "未執行"){
-      testItems.value.borderColor="#FF9A84"
 
-    }
+
+    testItems.value.forEach((testItem) => {
+
+      if(testItem.testStage !== "未執行"){
+        testItem.borderColor="#FF9A84"
+  
+      }
+      
+    });
+    
 
   })
 
@@ -51,6 +59,7 @@ const getData = async()=>{
     return { 
       testItems,
       collectRef,
+      borderStyle,
       getData,
 
 

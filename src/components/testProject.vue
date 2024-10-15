@@ -1,13 +1,49 @@
 <script setup>
 import saleEdit from '@/components/saleEdit.vue'
-import { ref,computed } from 'vue';
+import { RouterLink,useRoute } from 'vue-router';
+import { ref,computed, watch, onMounted } from 'vue';
 import { defineProps } from 'vue';
 import { useTestitemStore } from '@/pinia/testItem.js'
 import { db } from '@/firestore/firestoreInit.js';
 import { doc,deleteDoc } from "firebase/firestore"; 
 
+const route =useRoute();
+const rightColumnEdit = ref({
+    saleEdit:false,
+    devEdit:false,
+    mfrEdit:false,
+
+})
+const departmentURL = ref(route.path);
+
+onMounted(()=>{
+    if(departmentURL.value === "/sale"){
+        rightColumnEdit.value.saleEdit = true
+        rightColumnEdit.value.devEdit = false
+        rightColumnEdit.value.mfrEdit = false
+
+    }
+    else if (departmentURL.value  === "/development") {
+        rightColumnEdit.value.saleEdit = false
+        rightColumnEdit.value.devEdit = true
+        rightColumnEdit.value.mfrEdit = false
+        
+    }
+    else if (departmentURL.value  === "/manufacture") {
+        rightColumnEdit.value.saleEdit = false
+        rightColumnEdit.value.devEdit = false
+        rightColumnEdit.value.mfrEdit = true
+        
+    }
+
+})
+
+
+// console.log(rightColumnEdit.value)
+
 
 const TestitemStore = useTestitemStore();
+TestitemStore.borderStyle  //pinia getter
 
 
 const props = defineProps({
@@ -46,15 +82,15 @@ const deleteTestItem = async()=>{
 
 
 
-
-
 </script>
 
 <template>
     <div class="testProject":style="{ border: borderColor + ' 2px solid' }" >
         <div class="displayItem">
             <div class="button">
-                <button class="editBtn"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
+                <RouterLink :to="`/editForm/${id}`">
+                    <button class="editBtn" ><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
+                </RouterLink>
                 <button class="deleteBtn" @click="deleteTestItem"><font-awesome-icon icon="fa-solid fa-trash" /></button>
             </div>
             <div class="displayInfo">
@@ -73,7 +109,7 @@ const deleteTestItem = async()=>{
             </div>
         </div>
         <div class="departmentFunction">
-            <saleEdit/>
+            <saleEdit v-if="rightColumnEdit.saleEdit" />
         </div>
     </div>
     <!-- :style="TestitemStore.borderStyle" -->
