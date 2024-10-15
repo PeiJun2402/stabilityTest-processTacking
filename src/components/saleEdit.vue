@@ -7,11 +7,11 @@
     <div class="saleEdit">
         <form >
             <div class="confirmClient">
-                <input type="checkbox" id="" name="vehicle1" value="confirmClient">
+                <input type="checkbox"  value="confirmClient">
                 <label for="vehicle1"> 通知客戶-完成測試</label><br>
             </div>
             <div class="goToProduce">
-                <input type="checkbox" id="" name="vehicle1" value="goToProduce">
+                <input type="checkbox"  value="goToProduce">
                 <label for="vehicle1"> 客戶確認-進行生產排程</label><br>
             </div>
         </form>

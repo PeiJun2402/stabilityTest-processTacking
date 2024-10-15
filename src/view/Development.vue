@@ -1,5 +1,9 @@
 <script setup>
 import testProject from '@/components/testProject.vue'
+import { useTestitemStore } from '@/pinia/testItem.js'
+
+
+const TestitemStore = useTestitemStore();
 
 
 </script>
@@ -9,15 +13,21 @@ import testProject from '@/components/testProject.vue'
     <div class="testing">
         <p>執行中檢測</p>
         <ul>
-          <li><testProject/></li>
-          <li><testProject/></li>
+          <li  v-for="testItem in TestitemStore.testItems" :key="testItem.id ">
+            <testProject
+            :clientName="testItem.clientName"
+            :dueDate="testItem.dueDate"
+            :testStage = "testItem.testStage"
+            :borderColor = "testItem.borderColor"
+            :id="testItem.id"
+            />
+        </li>
         </ul>
     </div>
     <div class="untesting">
       <p>未執行檢測</p>
         <ul>
-          <li><testProject/></li>
-          <li><testProject/></li>
+
         </ul>
     </div>
   </div>

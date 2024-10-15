@@ -1,11 +1,14 @@
 <script setup>
 import saleEdit from '@/components/saleEdit.vue'
+import devEdit from '@/components/devEdit.vue'
+import mfrEdit from '@/components/mfrEdit.vue'
 import { RouterLink,useRoute } from 'vue-router';
 import { ref,computed, watch, onMounted } from 'vue';
 import { defineProps } from 'vue';
 import { useTestitemStore } from '@/pinia/testItem.js'
 import { db } from '@/firestore/firestoreInit.js';
 import { doc,deleteDoc } from "firebase/firestore"; 
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const route =useRoute();
 const rightColumnEdit = ref({
@@ -14,23 +17,27 @@ const rightColumnEdit = ref({
     mfrEdit:false,
 
 })
+const saleButton = ref()
 const departmentURL = ref(route.path);
 
 onMounted(()=>{
     if(departmentURL.value === "/sale"){
         rightColumnEdit.value.saleEdit = true
+        saleButton.value = true
         rightColumnEdit.value.devEdit = false
         rightColumnEdit.value.mfrEdit = false
 
     }
     else if (departmentURL.value  === "/development") {
         rightColumnEdit.value.saleEdit = false
+        saleButton.value = false
         rightColumnEdit.value.devEdit = true
         rightColumnEdit.value.mfrEdit = false
         
     }
     else if (departmentURL.value  === "/manufacture") {
         rightColumnEdit.value.saleEdit = false
+        saleButton.value = false
         rightColumnEdit.value.devEdit = false
         rightColumnEdit.value.mfrEdit = true
         
@@ -87,8 +94,8 @@ const deleteTestItem = async()=>{
 <template>
     <div class="testProject":style="{ border: borderColor + ' 2px solid' }" >
         <div class="displayItem">
-            <div class="button">
-                <RouterLink :to="`/editForm/${id}`">
+            <div class="button" v-if="saleButton">
+                <RouterLink :to="`/editForm/${id}`" >
                     <button class="editBtn" ><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
                 </RouterLink>
                 <button class="deleteBtn" @click="deleteTestItem"><font-awesome-icon icon="fa-solid fa-trash" /></button>
@@ -110,6 +117,8 @@ const deleteTestItem = async()=>{
         </div>
         <div class="departmentFunction">
             <saleEdit v-if="rightColumnEdit.saleEdit" />
+            <devEdit v-if="rightColumnEdit.devEdit" />
+            <mfrEdit v-if="rightColumnEdit.mfrEdit" />
         </div>
     </div>
     <!-- :style="TestitemStore.borderStyle" -->
@@ -134,6 +143,7 @@ const deleteTestItem = async()=>{
 
     .displayItem{
         // background-color: bisque;
+        padding: 1rem 0;
         grid-column: 1 / 5;
         display: flex;
 
@@ -142,13 +152,15 @@ const deleteTestItem = async()=>{
 
         .button{
             flex: 0.5;
+            // background-color: bisque;
+           
             
             
 
             button{
                 display: block;
                 margin: 1rem 0.5rem;
-                padding: .5rem;
+                margin-top: 1.5rem;
                 font-size: 1rem;
 
                 color: $gray20;

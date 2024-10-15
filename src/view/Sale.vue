@@ -14,7 +14,7 @@ const TestitemStore = useTestitemStore();
 <template>
   <saleFunciton/>
   <ul>
-    <li  v-for="testItem in TestitemStore.testItems" key="TestitemStore.testItem.formID ">
+    <li  v-for="testItem in TestitemStore.testItems" :key="testItem.id">
       <testProject
       :clientName="testItem.clientName"
       :dueDate="testItem.dueDate"
