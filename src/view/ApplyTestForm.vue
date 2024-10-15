@@ -3,10 +3,14 @@ import { ref,computed } from 'vue';
 import { useTestitemStore } from '@/pinia/testItem.js'
 import { nanoid } from 'nanoid';
 import { useRouter } from 'vue-router';
+import { db } from '@/firestore/firestoreInit.js';
+import { collection, addDoc } from "firebase/firestore"; 
 
 const router = useRouter();
 const TestitemStore = useTestitemStore();
 const uniqueId = nanoid(10).toUpperCase(); 
+
+
 
 const testItem = ref({
     formID:null,
@@ -16,20 +20,40 @@ const testItem = ref({
     sampleQty:null,
     ingredientForm:null,
     productPackage:null,
-    testStage:"Test1",
+    testStage:"未執行",
     remark:null,
     borderColor:"#58A9C3"
 
 })
 
+const addTestItem = async()=>{
+  try{
+    await addDoc(TestitemStore.collectRef,{
+      formID: uniqueId,
+      clientName:testItem.value.clientName,
+      dueDate:testItem.value.dueDate,
+      productML:testItem.value.productML,
+      sampleQty:testItem.value.sampleQty,
+      ingredientForm:testItem.value. ingredientForm,
+      productPackage:testItem.value. productPackage,
+      testStage:"未執行",
+      remark:testItem.value.remark,
+      borderColor:"#58A9C3"
 
-const addTestItem = ()=>{
-  testItem.value.formID = uniqueId;
-  TestitemStore.testItems.push(testItem);
-  router.push({ name: 'Sale' });
+    })
+
+    router.push({ name: 'Sale' });
+
+  }
+  catch(e){
+        console.error("Error adding document: ", e);
+
+    }
+
 
 
 }
+
 
 
 </script>

@@ -2,8 +2,15 @@
 import saleEdit from '@/components/saleEdit.vue'
 import { ref,computed } from 'vue';
 import { defineProps } from 'vue';
+import { useTestitemStore } from '@/pinia/testItem.js'
+import { db } from '@/firestore/firestoreInit.js';
+import { doc,deleteDoc } from "firebase/firestore"; 
 
-defineProps({
+
+const TestitemStore = useTestitemStore();
+
+
+const props = defineProps({
     clientName: {
         required: true,
         default: '未輸入客戶名稱'
@@ -20,7 +27,23 @@ defineProps({
         required: true,
         default: '#58A9C3'
     },
+    id: {
+        required: true,
+    },
 })
+
+const deleteTestItem = async()=>{
+    try{
+        await deleteDoc(doc(db,"testItem",props.id))
+        location.reload();
+    }
+    catch(e){
+    console.error("Error adding document: ", e);
+
+}
+   
+}
+
 
 
 
@@ -28,11 +51,11 @@ defineProps({
 </script>
 
 <template>
-    <div class="testProject":style="{ border: borderColor + ' 2px solid' }">
+    <div class="testProject":style="{ border: borderColor + ' 2px solid' }" >
         <div class="displayItem">
             <div class="button">
                 <button class="editBtn"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
-                <button class="deleteBtn"><font-awesome-icon icon="fa-solid fa-trash" /></button>
+                <button class="deleteBtn" @click="deleteTestItem"><font-awesome-icon icon="fa-solid fa-trash" /></button>
             </div>
             <div class="displayInfo">
                 <div class="clientName">

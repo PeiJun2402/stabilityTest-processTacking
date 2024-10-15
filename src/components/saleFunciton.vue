@@ -1,12 +1,42 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useTestitemStore } from '@/pinia/testItem.js'
 
-const testQty = ref({
-    untest:8,
-    test:9
+const TestitemStore = useTestitemStore();
+
+const testNUB = ref("")
+const untestNUB = ref("")
+
+onMounted(async()=>{
+  TestitemStore.testItems = []
+  await TestitemStore.getData();
+
+  const test = TestitemStore.testItems.filter((testItem)=>{
+    return testItem.testStage !== "未執行"
+  })
+  const untest = TestitemStore.testItems.filter((testItem)=>{
+    return testItem.testStage == "未執行"
+  })
+
+  testNUB.value = test.length
+  untestNUB.value = untest.length
+
+  
+
 
 })
+
+
+
+const testQty = ref({
+    untest:untestNUB,
+    test:testNUB
+
+})
+
+
+
 
 
 </script>

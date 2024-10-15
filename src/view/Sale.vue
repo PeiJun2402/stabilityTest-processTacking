@@ -2,8 +2,20 @@
 import saleFunciton from '@/components/saleFunciton.vue'
 import testProject from '@/components/testProject.vue'
 import { useTestitemStore } from '@/pinia/testItem.js'
+import { onMounted } from 'vue';
 
 const TestitemStore = useTestitemStore();
+
+
+onMounted(async()=>{
+  TestitemStore.testItems = []
+  await TestitemStore.getData();
+
+})
+
+
+
+
 
 
 </script>
@@ -11,12 +23,13 @@ const TestitemStore = useTestitemStore();
 <template>
   <saleFunciton/>
   <ul>
-    <li  v-for="testItem in TestitemStore.testItems" key=" TestitemStore.testItem.value.formID ">
+    <li  v-for="testItem in TestitemStore.testItems" key="TestitemStore.testItem.formID ">
       <testProject
-      :clientName="testItem.value.clientName"
-      :dueDate="testItem.value.dueDate"
-      :testStage = "testItem.value.testStage"
-      :borderColor = "testItem.value.borderColor"
+      :clientName="testItem.clientName"
+      :dueDate="testItem.dueDate"
+      :testStage = "testItem.testStage"
+      :borderColor = "testItem.borderColor"
+      :id="testItem.id"
       />
     </li>
 
