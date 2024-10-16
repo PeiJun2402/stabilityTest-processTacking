@@ -8,7 +8,7 @@ import { defineProps } from 'vue';
 import { useTestitemStore } from '@/pinia/testItem.js'
 import { db } from '@/firestore/firestoreInit.js';
 import { doc,deleteDoc } from "firebase/firestore"; 
-import { faL } from '@fortawesome/free-solid-svg-icons';
+
 
 const route =useRoute();
 const rightColumnEdit = ref({
@@ -17,29 +17,40 @@ const rightColumnEdit = ref({
     mfrEdit:false,
 
 })
-const saleButton = ref()
+const leftColumnButton = ref({
+    saleButton:false,
+    devButton:false,
+
+})
+
 const departmentURL = ref(route.path);
 
 onMounted(()=>{
     if(departmentURL.value === "/sale"){
         rightColumnEdit.value.saleEdit = true
-        saleButton.value = true
         rightColumnEdit.value.devEdit = false
         rightColumnEdit.value.mfrEdit = false
+
+        leftColumnButton.value.saleButton = true
+        leftColumnButton.value.devButton = false
 
     }
     else if (departmentURL.value  === "/development") {
         rightColumnEdit.value.saleEdit = false
-        saleButton.value = false
         rightColumnEdit.value.devEdit = true
         rightColumnEdit.value.mfrEdit = false
+
+        leftColumnButton.value.saleButton = false
+        leftColumnButton.value.devButton = true
         
     }
     else if (departmentURL.value  === "/manufacture") {
         rightColumnEdit.value.saleEdit = false
-        saleButton.value = false
         rightColumnEdit.value.devEdit = false
         rightColumnEdit.value.mfrEdit = true
+
+        leftColumnButton.value.saleButton = false
+        leftColumnButton.value.devButton = false
         
     }
 
@@ -94,11 +105,17 @@ const deleteTestItem = async()=>{
 <template>
     <div class="testProject":style="{ border: borderColor + ' 2px solid' }" >
         <div class="displayItem">
-            <div class="button" v-if="saleButton">
-                <RouterLink :to="`/editForm/${id}`" >
+            <div class="button" >
+                <RouterLink :to="`/editForm/${id}`" v-if="leftColumnButton.saleButton">
                     <button class="editBtn" ><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
                 </RouterLink>
-                <button class="deleteBtn" @click="deleteTestItem"><font-awesome-icon icon="fa-solid fa-trash" /></button>
+
+                    <button class="deleteBtn" @click="deleteTestItem" v-if="leftColumnButton.saleButton"><font-awesome-icon icon="fa-solid fa-trash" /></button>
+
+                <RouterLink :to="`/testStageRecord/${id}`"  v-if="leftColumnButton.devButton">
+                    <button class="testRecordBtn" @click="testRecord"><font-awesome-icon icon="fa-solid fa-clipboard" /></button>
+                </RouterLink>
+         
             </div>
             <div class="displayInfo">
                 <div class="clientName">
@@ -153,11 +170,9 @@ const deleteTestItem = async()=>{
         .button{
             flex: 0.5;
             // background-color: bisque;
-           
-            
-            
 
-            button{
+             button{
+
                 display: block;
                 margin: 1rem 0.5rem;
                 margin-top: 1.5rem;
@@ -170,8 +185,16 @@ const deleteTestItem = async()=>{
                 opacity: 0;
                 transition: opacity 0.5s ease;
 
-               
             }
+
+            .testRecordBtn{
+                margin-top: 2.7rem;
+
+            }
+           
+            
+            
+
         }
 
         .displayInfo{

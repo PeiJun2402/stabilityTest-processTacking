@@ -10,8 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import { all } from '@awesome.me/kit-KIT_CODE/icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faTrash,faPenToSquare)
+library.add(faTrash,faPenToSquare,faClipboard)
+
 
 
 

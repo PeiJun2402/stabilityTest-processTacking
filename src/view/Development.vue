@@ -6,6 +6,7 @@ import { useTestitemStore } from '@/pinia/testItem.js'
 const TestitemStore = useTestitemStore();
 
 
+
 </script>
 
 <template>
@@ -13,6 +14,7 @@ const TestitemStore = useTestitemStore();
     <div class="testing">
         <p>執行中檢測</p>
         <ul>
+
           <li  v-for="testItem in TestitemStore.testItems" :key="testItem.id ">
             <testProject
             :clientName="testItem.clientName"
@@ -22,6 +24,7 @@ const TestitemStore = useTestitemStore();
             :id="testItem.id"
             />
         </li>
+
         </ul>
     </div>
     <div class="untesting">
