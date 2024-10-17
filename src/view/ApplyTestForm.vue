@@ -22,7 +22,9 @@ const testItem = ref({
     productPackage:null,
     testStage:"未執行",
     remark:null,
-    borderColor:"#58A9C3"
+    borderColor:"#58A9C3",
+    test1Result:null,
+    test2Result:{firstTemRecord:null, secondTemRecord:null, thirdTemRecord:null, fourthTemRecord:null},
 
 })
 
@@ -38,7 +40,9 @@ const addTestItem = async()=>{
       productPackage:testItem.value. productPackage,
       testStage:"未執行",
       remark:testItem.value.remark,
-      borderColor:"#58A9C3"
+      borderColor:"#58A9C3",
+      test1Result:null,
+      test2Result:{firstTemRecord:null, secondTemRecord:null, thirdTemRecord:null, fourthTemRecord:null},
 
     })
 
