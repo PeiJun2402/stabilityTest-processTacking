@@ -25,6 +25,44 @@ const testItem = ref({
     borderColor:"#58A9C3",
     test1Result:null,
     test2Result:{firstTemRecord:null, secondTemRecord:null, thirdTemRecord:null, fourthTemRecord:null},
+    test3Result:null,
+    test4Result:{
+      test4Record:null,
+      bacteria1:true,
+      bacteria2:true,
+      bacteria3:true,
+
+    },
+    test5Result:{
+      emulsification:false,
+      oilWaterSeparation:false
+
+    },
+    testPassed:{
+      test1Passed:false,
+      test2Passed:false,
+      test3Passed:false,
+      test4Passed:false,
+      test5Passed:false,
+    },
+    testcheck:{
+      test2check:true,
+      test3check:true,
+      test4check:true,
+      test5check:true,
+
+    },
+    testPassButton:{
+      test1PassButton:false,
+      test2PassButton:false,
+      test3PassButton:false,
+      test4PassButton:false,
+      test5PassButton:false,
+      changeColor:false
+    }
+
+
+
 
 })
 
@@ -43,6 +81,42 @@ const addTestItem = async()=>{
       borderColor:"#58A9C3",
       test1Result:null,
       test2Result:{firstTemRecord:null, secondTemRecord:null, thirdTemRecord:null, fourthTemRecord:null},
+      test3Result:null,
+      test4Result:{
+        test4Record:null,
+        bacteria1:false,
+        bacteria2:false,
+        bacteria3:false,
+
+      },
+      test5Result:{
+        emulsification:false,
+        oilWaterSeparation:false
+
+      },
+      testPassed:{
+        test1Passed:false,
+        test2Passed:false,
+        test3Passed:false,
+        test4Passed:false,
+        test5Passed:false,
+      },
+      testcheck:{
+        test2check:true,
+        test3check:true,
+        test4check:true,
+        test5check:true,
+
+      },
+      testPassButton:{
+      test1PassButton:false,
+      test2PassButton:false,
+      test3PassButton:false,
+      test4PassButton:false,
+      test5PassButton:false,
+      changeColor:false
+    }
+
 
     })
 

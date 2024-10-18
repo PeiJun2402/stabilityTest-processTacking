@@ -1,131 +1,489 @@
 <script setup>
-import { useTestitemStore } from '@/pinia/testItem.js'
+import { useTestitemStore } from '@/pinia/testItem.js';
+import { db } from '@/firestore/firestoreInit.js';
+import { doc, updateDoc } from "firebase/firestore"; 
+import { useRoute } from 'vue-router';
 import { ref } from 'vue';
 
+const route =useRoute();
+const testItemId = route.params.id;
 const TestitemStore = useTestitemStore();
 
-const changeColor =ref(false)
+
+const itemform =
+    TestitemStore.testItems.find((testItem)=>{
+    return testItem.id === testItemId
+
+   
+
+})
+
+
+const testStageRecord =ref({
+    sampleQty:itemform.sampleQty,
+    productPackage:itemform.productPackage,
+    testStage:itemform.testStage,
+    test1Result:itemform.test1Result,
+    test2Result:{
+        firstTemRecord:itemform.test2Result.firstTemRecord, 
+        secondTemRecord:itemform.test2Result.secondTemRecord, 
+        thirdTemRecord:itemform.test2Result.thirdTemRecord, 
+        fourthTemRecord:itemform.test2Result.fourthTemRecord
+    },
+    test3Result:itemform.test3Result,
+    test4Result:{
+      test4Record:itemform.test4Result.test4Record,
+      bacteria1:itemform.test4Result.bacteria1,
+      bacteria2:itemform.test4Result.bacteria2,
+      bacteria3:itemform.test4Result.bacteria3,
+
+    },
+    test5Result:{
+      emulsification:false,
+      oilWaterSeparation:false
+
+    },
+    testPassed:{
+      test1Passed:itemform.testPassed.test1Passed,
+      test2Passed:itemform.testPassed.test2Passed,
+      test3Passed:itemform.testPassed.test3Passed,
+      test4Passed:itemform.testPassed.test4Passed,
+      test5Passed:itemform.testPassed.test5Passed,
+    },
+    testcheck:{
+      test2check:itemform.testcheck.test2check,
+      test3check:itemform.testcheck.test3check,
+      test4check:itemform.testcheck.test4check,
+      test5check:itemform.testcheck.test5check,
+
+    },
+    testPassButton:{
+      test1PassButton:itemform.testPassButton.test1PassButton,
+      test2PassButton:itemform.testPassButton.test2PassButton,
+      test3PassButton:itemform.testPassButton.test3PassButton,
+      test4PassButton:itemform.testPassButton.test4PassButton,
+      test5PassButton:itemform.testPassButton.test5PassButton,
+      changeColor:itemform.testPassButton.changeColor
+    }
+
+
+})
+
+const updateTest1Record = async()=>{
+    testStageRecord.value.testPassButton.changeColor = !testStageRecord.value.testPassButton.changeColor;
+    testStageRecord.value.testPassed.test1Passed = !testStageRecord.value.testPassed.test1Passed;
+    testStageRecord.value.testcheck.test2check = !testStageRecord.value.testcheck.test2check;
+    testStageRecord.value.testPassButton.test1PassButton = !testStageRecord.value.testPassButton.test1PassButton;
+
+
+    if(testStageRecord.value.testStage === "未執行"){
+        testStageRecord.value.testStage = "Test1"
+
+    }else{
+        testStageRecord.value.testStage = "未執行"
+
+    }
+
+    
+
+    try{
+      
+        await updateDoc(doc(db,"testItem", testItemId), {
+            sampleQty:testStageRecord.value.sampleQty,
+            productPackage:testStageRecord.value.productPackage,
+            testStage:testStageRecord.value.testStage,
+            test1Result:testStageRecord.value.test1Result,
+            testPassed:{
+            test1Passed:testStageRecord.value.testPassed.test1Passed,
+            test2Passed:testStageRecord.value.testPassed.test2Passed,
+            test3Passed:testStageRecord.value.testPassed.test3Passed,
+            test4Passed:testStageRecord.value.testPassed.test4Passed,
+            test5Passed:testStageRecord.value.testPassed.test5Passed,
+            },
+            testcheck:{
+            test2check:testStageRecord.value.testcheck.test2check,
+            test3check:testStageRecord.value.testcheck.test3check,
+            test4check:testStageRecord.value.testcheck.test4check,
+            test5check:testStageRecord.value.testcheck.test5check,
+
+            },
+            testPassButton:{
+            test1PassButton:testStageRecord.value.testPassButton.test1PassButton,
+            test2PassButton:testStageRecord.value.testPassButton.test2PassButton,
+            test3PassButton:testStageRecord.value.testPassButton.test3PassButton,
+            test4PassButton:testStageRecord.value.testPassButton.test4PassButton,
+            test5PassButton:testStageRecord.value.testPassButton.test5PassButton,
+            changeColor:testStageRecord.value.testPassButton.changeColor
+            }
+
+        });
+
+    }
+    catch(e){
+  console.error("Error adding document: ", e);
+
+    }
+}
+const updateTest2Record = async()=>{
+
+    testStageRecord.value.testPassed.test2Passed = !testStageRecord.value.testPassed.test2Passed;
+    testStageRecord.value.testcheck.test3check = !testStageRecord.value.testcheck.test3check;
+    testStageRecord.value.testPassButton.test2PassButton = !testStageRecord.value.testPassButton.test2PassButton;
+
+    if(testStageRecord.value.testStage === "Test1"){
+        testStageRecord.value.testStage = "Test2"
+
+    }else{
+        testStageRecord.value.testStage = "Test1"
+
+    }
+
+    
+
+    try{
+      
+        await updateDoc(doc(db,"testItem", testItemId), {
+           
+            testStage:testStageRecord.value.testStage,
+            test2Result:{
+                firstTemRecord:testStageRecord.value.test2Result.firstTemRecord, 
+                secondTemRecord:testStageRecord.value.test2Result.secondTemRecord, 
+                thirdTemRecord:testStageRecord.value.test2Result.thirdTemRecord, 
+                fourthTemRecord:testStageRecord.value.test2Result.fourthTemRecord
+            }, 
+            testPassed:{
+            test1Passed:testStageRecord.value.testPassed.test1Passed,
+            test2Passed:testStageRecord.value.testPassed.test2Passed,
+            test3Passed:testStageRecord.value.testPassed.test3Passed,
+            test4Passed:testStageRecord.value.testPassed.test4Passed,
+            test5Passed:testStageRecord.value.testPassed.test5Passed,
+            },
+            testcheck:{
+            test2check:testStageRecord.value.testcheck.test2check,
+            test3check:testStageRecord.value.testcheck.test3check,
+            test4check:testStageRecord.value.testcheck.test4check,
+            test5check:testStageRecord.value.testcheck.test5check,
+
+            },
+            testPassButton:{
+            test1PassButton:testStageRecord.value.testPassButton.test1PassButton,
+            test2PassButton:testStageRecord.value.testPassButton.test2PassButton,
+            test3PassButton:testStageRecord.value.testPassButton.test3PassButton,
+            test4PassButton:testStageRecord.value.testPassButton.test4PassButton,
+            test5PassButton:testStageRecord.value.testPassButton.test5PassButton,
+            changeColor:testStageRecord.value.testPassButton.changeColor
+            }
+
+
+
+        });
+
+        console.log("sucess updata")
+
+    }
+    catch(e){
+  console.error("Error adding document: ", e);
+
+    }
+}
+const updateTest3Record = async()=>{
+
+    testStageRecord.value.testPassed.test3Passed = !testStageRecord.value.testPassed.test3Passed;
+    testStageRecord.value.testcheck.test4check = !testStageRecord.value.testcheck.test4check;
+    testStageRecord.value.testPassButton.test3PassButton = !testStageRecord.value.testPassButton.test3PassButton;
+
+    if(testStageRecord.value.testStage === "Test2"){
+        testStageRecord.value.testStage = "Test3"
+
+    }else{
+        testStageRecord.value.testStage = "Test2"
+
+    }
+
+    
+
+    try{
+      
+        await updateDoc(doc(db,"testItem", testItemId), {
+           
+            testStage:testStageRecord.value.testStage,
+            test3Result:testStageRecord.value.test3Result,
+            testPassed:{
+            test1Passed:testStageRecord.value.testPassed.test1Passed,
+            test2Passed:testStageRecord.value.testPassed.test2Passed,
+            test3Passed:testStageRecord.value.testPassed.test3Passed,
+            test4Passed:testStageRecord.value.testPassed.test4Passed,
+            test5Passed:testStageRecord.value.testPassed.test5Passed,
+            },
+            testcheck:{
+            test2check:testStageRecord.value.testcheck.test2check,
+            test3check:testStageRecord.value.testcheck.test3check,
+            test4check:testStageRecord.value.testcheck.test4check,
+            test5check:testStageRecord.value.testcheck.test5check,
+
+            },
+            testPassButton:{
+            test1PassButton:testStageRecord.value.testPassButton.test1PassButton,
+            test2PassButton:testStageRecord.value.testPassButton.test2PassButton,
+            test3PassButton:testStageRecord.value.testPassButton.test3PassButton,
+            test4PassButton:testStageRecord.value.testPassButton.test4PassButton,
+            test5PassButton:testStageRecord.value.testPassButton.test5PassButton,
+            changeColor:testStageRecord.value.testPassButton.changeColor
+            }
+
+
+
+        });
+
+    }
+    catch(e){
+  console.error("Error adding document: ", e);
+
+    }
+}
+const updateTest4Record = async()=>{
+
+    testStageRecord.value.testPassed.test4Passed = !testStageRecord.value.testPassed.test4Passed;
+    testStageRecord.value.testcheck.test5check = !testStageRecord.value.testcheck.test5check;
+    testStageRecord.value.testPassButton.test4PassButton = !testStageRecord.value.testPassButton.test4PassButton;
+
+    if(testStageRecord.value.testStage === "Test3"){
+        testStageRecord.value.testStage = "Test4"
+
+    }else{
+        testStageRecord.value.testStage = "Test3"
+
+    }
+
+
+    
+
+    try{
+      
+        await updateDoc(doc(db,"testItem", testItemId), {
+           
+            testStage:testStageRecord.value.testStage,
+            test4Result:{
+            test4Record:testStageRecord.value.test4Result.test4Record,
+            bacteria1:testStageRecord.value.test4Result.bacteria1,
+            bacteria2:testStageRecord.value.test4Result.bacteria2,
+            bacteria3:testStageRecord.value.test4Result.bacteria3,
+
+            },
+            testPassed:{
+            test1Passed:testStageRecord.value.testPassed.test1Passed,
+            test2Passed:testStageRecord.value.testPassed.test2Passed,
+            test3Passed:testStageRecord.value.testPassed.test3Passed,
+            test4Passed:testStageRecord.value.testPassed.test4Passed,
+            test5Passed:testStageRecord.value.testPassed.test5Passed,
+            },
+            testcheck:{
+            test2check:testStageRecord.value.testcheck.test2check,
+            test3check:testStageRecord.value.testcheck.test3check,
+            test4check:testStageRecord.value.testcheck.test4check,
+            test5check:testStageRecord.value.testcheck.test5check,
+
+            },
+            testPassButton:{
+            test1PassButton:testStageRecord.value.testPassButton.test1PassButton,
+            test2PassButton:testStageRecord.value.testPassButton.test2PassButton,
+            test3PassButton:testStageRecord.value.testPassButton.test3PassButton,
+            test4PassButton:testStageRecord.value.testPassButton.test4PassButton,
+            test5PassButton:testStageRecord.value.testPassButton.test5PassButton,
+            changeColor:testStageRecord.value.testPassButton.changeColor
+            }
+
+
+
+        });
+
+    }
+    catch(e){
+  console.error("Error adding document: ", e);
+
+    }
+}
+const updateTest5Record = async()=>{
+
+    testStageRecord.value.testPassed.test5Passed = !testStageRecord.value.testPassed.test5Passed;
+    testStageRecord.value.testPassButton.test5PassButton = !testStageRecord.value.testPassButton.test5PassButton;
+
+
+    if(testStageRecord.value.testStage === "Test4"){
+        testStageRecord.value.testStage = "Finished"
+
+    }else{
+        testStageRecord.value.testStage = "Test4"
+
+    }
+    
+
+
+    try{
+      
+        await updateDoc(doc(db,"testItem", testItemId), {
+           
+            testStage:testStageRecord.value.testStage,
+            test5Result:{
+            emulsification:testStageRecord.value.test5Result.emulsification,
+            oilWaterSeparation:testStageRecord.value.test5Result.oilWaterSeparation
+
+            },
+            testPassed:{
+            test1Passed:testStageRecord.value.testPassed.test1Passed,
+            test2Passed:testStageRecord.value.testPassed.test2Passed,
+            test3Passed:testStageRecord.value.testPassed.test3Passed,
+            test4Passed:testStageRecord.value.testPassed.test4Passed,
+            test5Passed:testStageRecord.value.testPassed.test5Passed,
+            },
+            testcheck:{
+            test2check:testStageRecord.value.testcheck.test2check,
+            test3check:testStageRecord.value.testcheck.test3check,
+            test4check:testStageRecord.value.testcheck.test4check,
+            test5check:testStageRecord.value.testcheck.test5check,
+
+            },
+            testPassButton:{
+            test1PassButton:testStageRecord.value.testPassButton.test1PassButton,
+            test2PassButton:testStageRecord.value.testPassButton.test2PassButton,
+            test3PassButton:testStageRecord.value.testPassButton.test3PassButton,
+            test4PassButton:testStageRecord.value.testPassButton.test4PassButton,
+            test5PassButton:testStageRecord.value.testPassButton.test5PassButton,
+            changeColor:testStageRecord.value.testPassButton.changeColor
+            }
+
+
+
+        });
+
+    }
+    catch(e){
+  console.error("Error adding document: ", e);
+
+    }
+}
+
 
 
 </script>
 
 <template>
-    <div  :class="{ red:changeColor }" class="testStageRecord-section ">
+    <div  :class="{ red:testStageRecord.testPassButton.changeColor }" class="testStageRecord-section ">
         <div class="displayInfo">
                 <div class="clientName">
                     <p>客戶名稱</p>
-                    <h3>mfirme</h3>
+                    <h3>{{ itemform.clientName }}</h3>
                 </div>
                 <div class="dueDate">
                     <p>預計生產日期</p>
-                    <h3>2024/05/06</h3>
+                    <h3>{{ itemform.dueDate }}</h3>
                 </div>
                 <div class="testStage">
                     <p>檢測階段</p>
-                    <h3>tew6</h3>
+                    <h3 :class="{ red:testStageRecord.testPassButton.changeColor }" class="blue">{{ testStageRecord.testStage }}</h3>
                 </div>
          </div>
          <hr>
          <div class="testStageinfo">
-            <div class="test1 testDIV">
+            <div :class="{ test:testStageRecord.testPassButton.test1PassButton }" class="testDIV">
                 <h5>TEST1 - 瓶器測漏</h5>
                 <div class="testRecord">
-                    <form class="test1Form testForm">
+                    <form class="test1Form testForm" >
                         <div class="sampleQty">
                             <label for="sampleQty">檢測數量</label>
-                            <input type="text" id="sampleQty" value="25">
+                            <input type="text" id="sampleQty"  v-model="testStageRecord.sampleQty" readonly>
                         </div>
                         <div class="productPackage">
                             <label for="productPackage">產品包材材質</label>
-                            <input type="text" id="productPackage" value="75">
+                            <input type="text" id="productPackage"  v-model="testStageRecord.productPackage" readonly>
                         </div>
                         <div class="test1Result">
                             <label for="test1Result">結果</label>
-                            <input type="text" id="test1Result" value="15">
+                            <input type="text" id="test1Result"  v-model="testStageRecord.test1Result" :readonly="test1PassButton">
                         </div>
                         
                     </form>
-                    <button type="submit" class="test1Pass">unfinished</button>
+                    <button type="submit" :class="{ testPassed:testStageRecord.testPassed.test1Passed }" class="test1Pass unTestPassed" @click="updateTest1Record">{{  testStageRecord.testPassButton.test1PassButton?"Finished":"Unfinished" }}</button>
                 </div>
             </div>
-            <div class="test2 testDIV">
+            <div  :class="{ test: testStageRecord.testPassButton.test2PassButton }" class="testDIV">
                 <h5>TEST2 - 高低溫測試循環</h5>
                 <div class="testRecord">
                     <form class="test2Form testForm">
                         <div class="left">
                             <div class="firstTemRecord">
                                 <label for="firstTemRecord">第1次循環溫度</label>
-                                <input type="text" id="firstTemRecord" value="25c">
+                                <input type="text" id="firstTemRecord" v-model="testStageRecord.test2Result.firstTemRecord" :readonly="test2PassButton">
                             </div>
                             <div class="secondTemRecord">
                                 <label for="secondTemRecord">第2次循環溫度</label>
-                                <input type="text" id="secondTemRecord" value="27c">
+                                <input type="text" id="secondTemRecord" v-model="testStageRecord.test2Result.secondTemRecord" :readonly="test2PassButton">
                             </div>
                         </div>
                         <div class="right">           
                             <div class="thirdTemRecord">
                                 <label for="thirdTemRecord">第3次循環溫度</label>
-                                <input type="text" id="thirdTemRecord" value="30c">
+                                <input type="text" id="thirdTemRecord" v-model="testStageRecord.test2Result.thirdTemRecord" :readonly="test2PassButton">
                             </div>
                             <div class="fourthTemRecord">
                                 <label for="fourthTemRecord">第4次循環溫度</label>
-                                <input type="text" id="fourthTemRecord" value="45c">
+                                <input type="text" id="fourthTemRecord" v-model="testStageRecord.test2Result.fourthTemRecord" :readonly="test2PassButton">
                             </div>
                         </div>
                     </form>
-                    <button type="submit" class="test2Pass">unfinished</button>
+                    <button type="submit" :class="{ testPassed:testStageRecord.testPassed.test2Passed, test2PassHidden:testStageRecord.testcheck.test2check }" class="test2Pass unTestPassed" @click="updateTest2Record">{{  testStageRecord.testPassButton.test2PassButton?"Finished":"Unfinished" }}</button>
                 </div>
             </div>
-            <div class="test3 testDIV">
+            <div  :class="{ test:testStageRecord.testPassButton.test3PassButton }" class="testDIV">
                 <h5>TEST3 - 恆濕恆溫試驗</h5>
                 <div class="testRecord">
                     <form class="test3Form testForm">
                         <label for="constantHUM&TEM">檢測紀錄</label>
-                        <textarea id="constantHUM&TEM" >25c</textarea>
+                        <textarea id="constantHUM&TEM" v-model="testStageRecord.test3Result" :readonly="test3PassButton">25c</textarea>
                     </form>
-                    <button type="submit" class="test3Pass">unfinished</button>
+                    <button type="submit" :class="{ testPassed:testStageRecord.testPassed.test3Passed, test3PassHidden:testStageRecord.testcheck.test3check }" class="test3Pass  unTestPassed" @click="updateTest3Record">{{  testStageRecord.testPassButton.test3PassButton?"Finished":"Unfinished" }}</button>
                 </div>
             </div>
-            <div class="test4 testDIV">
+            <div  :class="{ test:testStageRecord.testPassButton.test4PassButton }" class="testDIV">
                 <h5>TEST4 - pH、驗菌測試</h5>
                 <div class="testRecord">
                     <form class="test4Form testForm">
                         <div class="left">
                             <div class="test4Record">
                                 <label for="test4Record">觀測紀錄</label>
-                                <textarea id="test4Record" >29c</textarea>
+                                <textarea id="test4Record" v-model="testStageRecord.test4Result.test4Record" :readonly="test4PassButton">29c</textarea>
                             </div>
                         </div>
                         <div class="right">           
-                            <div class="thirdTemRecord">
-                                <label for="thirdTemRecord">驗菌結果</label>
-                                <input type="checkbox" >
-                                <label class="checkboxResult">未驗出大腸桿菌</label><br>
-                                <input type="checkbox" >
+                            <div class="fourthTemRecord">
+                                <label for="fourthRecord">驗菌結果</label>
+                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria1" :readonly="test4PassButton">
+                                <label class="checkboxResult" >未驗出大腸桿菌</label><br>
+                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria2" :readonly="test4PassButton">
                                 <label class="checkboxResult">未驗出綠膿桿菌</label><br>
-                                <input type="checkbox" >
+                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria3" :readonly="test4PassButton">
                                 <label class="checkboxResult">未驗出金黃色葡萄球菌</label><br>
                             </div>
                         </div>
                     </form>
-                    <button type="submit" class="test4Pass">unfinished</button>
+                    <button type="submit" :class="{ testPassed:testStageRecord.testPassed.test4Passed, test4PassHidden:testStageRecord.testcheck.test4check }" class="test4Pass unTestPassed"  @click="updateTest4Record">{{  testStageRecord.testPassButton.test4PassButton?"Finished":"Unfinished" }}</button>
                 </div>
             </div>
-            <div class="test5 testDIV">
+            <div  :class="{ test:testStageRecord.testPassButton.test5PassButton }" class="testDIV">
                 <h5>TEST5 - 離心測試 <span>( 乳化劑型專屬 )</span></h5>
                 <div class="testRecord">
                     <form class="test5Form testForm">
                                 <label for="thirdTemRecord">測試結果</label>
                                 <div class="firstCheck">
-                                    <input type="checkbox" >
+                                    <input type="checkbox" :readonly="test5PassButton">
                                     <label class="checkboxResult">確認乳化完全</label><br>
                                 </div>
                                 <div class="secondCheck">
-                                    <input type="checkbox" >
+                                    <input type="checkbox" :readonly="test5PassButton">
                                     <label class="checkboxResult">無油水分離現象</label><br>
                                 </div>
                     </form>
-                    <button type="submit" class="test5Pass">unfinished</button>
+                    <button type="submit" :class="{ testPassed:testStageRecord.testPassed.test5Passed, test5PassHidden:testStageRecord.testcheck.test5check }" class="test5Pass unTestPassed"  @click="updateTest5Record">{{  testStageRecord.testPassButton.test5PassButton?"Finished":"Unfinished" }}</button>
                 </div>
             </div>
          </div>
@@ -172,23 +530,49 @@ const changeColor =ref(false)
                 font-size: 2.2rem;
             }
 
+
+
             .clientName h3,
             .dueDate h3{
                 color: $primaryColor;
 
             }
-            .testStage h3{
+            .blue{
+                color: $primaryColor;
+
+            }
+
+            .red{
                 color: $pointColor;
 
             }
+
         }
 
     .testStageinfo{
         margin-top: 2rem;
+
+        .test{
+            background-color: $gray10;
+            border-radius: 1rem;
+           
+            h5{
+                opacity: 0.5;
+            }
+
+            .testForm{
+                opacity: 0.5;
+            }
+
+
+
+
+        }
+
         .testDIV{
             width: 100%;
             padding: 1rem 0;
-            // background-color: aqua;
+            margin: 0.5rem 0;
 
             h5{
                 font-size: 1.4rem;
@@ -227,6 +611,17 @@ const changeColor =ref(false)
 
                 }
 
+                .unTestPassed{
+                    @include buttonbStyle($primaryColor 2px solid,transparent,$primaryColor);
+
+                }
+
+                
+                .testPassed{
+                    @include buttonbStyle($pointColor 2px solid,$pointColor,white);
+
+                }
+
 
                 //----------- custom style---------------
 
@@ -250,15 +645,12 @@ const changeColor =ref(false)
                     width: 60%;
                     margin: 0 auto;
                    
-                   
-
-                    @include buttonbStyle($primaryColor 2px solid,transparent,$primaryColor);
-
                     font-size: 1.2rem;
                     font-weight: 700;
 
 
                 }
+
 
 
                 //TEST2
@@ -281,14 +673,20 @@ const changeColor =ref(false)
                     height: 50%;
                     margin: 0 auto;
                     margin-top: 2rem;
-                   
-                    @include buttonbStyle($primaryColor 2px solid,transparent,$primaryColor);
 
                     font-size: 1.2rem;
                     font-weight: 700;
+                    visibility:visible;
 
 
                 }
+
+                .test2PassHidden{
+                    visibility: hidden;
+
+                }
+
+
 
                 //TEST3
                 .test3Form{
@@ -309,12 +707,16 @@ const changeColor =ref(false)
                     height: 45%;
                     margin: 0 auto;
                     margin-top: 2rem;
-                   
-                    @include buttonbStyle($primaryColor 2px solid,transparent,$primaryColor);
 
                     font-size: 1.2rem;
                     font-weight: 700;
+                    visibility:visible;
 
+
+                }
+
+                .test3PassHidden{
+                    visibility: hidden;
 
                 }
 
@@ -347,13 +749,18 @@ const changeColor =ref(false)
                     margin: 0 auto;
                     margin-top: 2rem;
                    
-                    @include buttonbStyle($primaryColor 2px solid,transparent,$primaryColor);
-
                     font-size: 1.2rem;
                     font-weight: 700;
+                    visibility:visible;
 
 
                 }
+
+                .test4PassHidden{
+                    visibility: hidden;
+
+                }
+
 
                 //TEST5
                 .test5Form{
@@ -372,14 +779,19 @@ const changeColor =ref(false)
                     width: 60%;
                     margin: 0 auto;
 
-                   
-                    @include buttonbStyle($primaryColor 2px solid,transparent,$primaryColor);
-
                     font-size: 1.2rem;
                     font-weight: 700;
+                    visibility:visible;
 
 
                 }
+
+                .test5PassHidden{
+                    visibility: hidden;
+
+                }
+
+                
 
 
                 
