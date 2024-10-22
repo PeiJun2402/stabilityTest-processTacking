@@ -3,61 +3,10 @@ import saleEdit from '@/components/saleEdit.vue'
 import devEdit from '@/components/devEdit.vue'
 import mfrEdit from '@/components/mfrEdit.vue'
 import { RouterLink,useRoute } from 'vue-router';
-import { ref,computed, watch, onMounted } from 'vue';
-import { defineProps } from 'vue';
+import { ref,computed, watch, onMounted,defineProps } from 'vue';
 import { useTestitemStore } from '@/pinia/testItem.js'
 import { db } from '@/firestore/firestoreInit.js';
 import { doc,deleteDoc } from "firebase/firestore"; 
-
-
-const route =useRoute();
-const rightColumnEdit = ref({
-    saleEdit:false,
-    devEdit:false,
-    mfrEdit:false,
-
-})
-const leftColumnButton = ref({
-    saleButton:false,
-    devButton:false,
-
-})
-
-const departmentURL = ref(route.path);
-
-onMounted(()=>{
-    if(departmentURL.value === "/sale"){
-        rightColumnEdit.value.saleEdit = true
-        rightColumnEdit.value.devEdit = false
-        rightColumnEdit.value.mfrEdit = false
-
-        leftColumnButton.value.saleButton = true
-        leftColumnButton.value.devButton = false
-
-    }
-    else if (departmentURL.value  === "/development") {
-        rightColumnEdit.value.saleEdit = false
-        rightColumnEdit.value.devEdit = true
-        rightColumnEdit.value.mfrEdit = false
-
-        leftColumnButton.value.saleButton = false
-        leftColumnButton.value.devButton = true
-        
-    }
-    else if (departmentURL.value  === "/manufacture") {
-        rightColumnEdit.value.saleEdit = false
-        rightColumnEdit.value.devEdit = false
-        rightColumnEdit.value.mfrEdit = true
-
-        leftColumnButton.value.saleButton = false
-        leftColumnButton.value.devButton = false
-        
-    }
-
-})
-
-
-// console.log(rightColumnEdit.value)
 
 
 const TestitemStore = useTestitemStore();
@@ -85,6 +34,66 @@ const props = defineProps({
         required: true,
     },
 })
+
+
+
+const route =useRoute();
+const rightColumnEdit = ref({
+    saleEdit:false,
+    devEdit:false,
+    mfrEdit:false,
+
+})
+const leftColumnButton = ref({
+    saleButton:false,
+    devButton:false,
+
+})
+
+const departmentURL = ref(route.path);
+
+
+onMounted(()=>{
+    if(departmentURL.value === "/sale"){
+        rightColumnEdit.value.saleEdit = true
+        rightColumnEdit.value.devEdit = false
+        rightColumnEdit.value.mfrEdit = false
+
+        leftColumnButton.value.saleButton = true
+        leftColumnButton.value.devButton = false
+
+    }
+    else if (departmentURL.value  === "/development") {
+
+        if(props.testStage !== "未執行"){
+            rightColumnEdit.value.saleEdit = false
+            rightColumnEdit.value.devEdit = true
+            rightColumnEdit.value.mfrEdit = false
+        }else{
+            rightColumnEdit.value.saleEdit = false
+            rightColumnEdit.value.devEdit = false
+            rightColumnEdit.value.mfrEdit = false
+
+        }
+        leftColumnButton.value.saleButton = false
+        leftColumnButton.value.devButton = true
+        
+    }
+    else if (departmentURL.value  === "/manufacture") {
+        rightColumnEdit.value.saleEdit = false
+        rightColumnEdit.value.devEdit = false
+        rightColumnEdit.value.mfrEdit = true
+
+        leftColumnButton.value.saleButton = false
+        leftColumnButton.value.devButton = false
+        
+    }
+
+})
+
+
+// console.log(rightColumnEdit.value)
+
 
 const deleteTestItem = async()=>{
     try{
@@ -134,7 +143,10 @@ const deleteTestItem = async()=>{
         </div>
         <div class="departmentFunction">
             <saleEdit v-if="rightColumnEdit.saleEdit" />
-            <devEdit v-if="rightColumnEdit.devEdit" />
+            <devEdit 
+            v-if="rightColumnEdit.devEdit"
+            :id="props.id"
+            :testStage="props.testStage" />
             <mfrEdit v-if="rightColumnEdit.mfrEdit" />
         </div>
     </div>

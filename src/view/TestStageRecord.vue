@@ -178,7 +178,6 @@ const updateTest2Record = async()=>{
 
         });
 
-        console.log("sucess updata")
 
     }
     catch(e){
