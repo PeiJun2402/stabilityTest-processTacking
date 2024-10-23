@@ -31,10 +31,11 @@ const props = defineProps({
         default: '#58A9C3'
     },
     id: {
-        required: true,
+        required: true
     },
-    confirmMfr: {
+    mfrDate: {
         required: true,
+        default: '未排定日期'
     },
 })
 
@@ -53,54 +54,9 @@ const leftColumnButton = ref({
 
 })
 
-const departmentURL = ref(route.path);
 
 
 onMounted(()=>{
-    if(departmentURL.value === "/sale"){
-
-        if(props.testStage === "Finished"){
-            rightColumnEdit.value.saleEdit = true
-            rightColumnEdit.value.devEdit = false
-            rightColumnEdit.value.mfrEdit = false
-
-        }else{
-            rightColumnEdit.value.saleEdit = false
-            rightColumnEdit.value.devEdit = false
-            rightColumnEdit.value.mfrEdit = false
-
-        }
-       
-
-        leftColumnButton.value.saleButton = true
-        leftColumnButton.value.devButton = false
-
-    }
-    else if (departmentURL.value  === "/development") {
-
-        if(props.testStage !== "未執行"){
-            rightColumnEdit.value.saleEdit = false
-            rightColumnEdit.value.devEdit = true
-            rightColumnEdit.value.mfrEdit = false
-        }else{
-            rightColumnEdit.value.saleEdit = false
-            rightColumnEdit.value.devEdit = false
-            rightColumnEdit.value.mfrEdit = false
-
-        }
-        leftColumnButton.value.saleButton = false
-        leftColumnButton.value.devButton = true
-        
-    }
-    else if (departmentURL.value  === "/manufacture") {
-        rightColumnEdit.value.saleEdit = false
-        rightColumnEdit.value.devEdit = false
-        rightColumnEdit.value.mfrEdit = true
-
-        leftColumnButton.value.saleButton = false
-        leftColumnButton.value.devButton = false
-        
-    }
 
 })
 
@@ -125,19 +81,11 @@ const deleteTestItem = async()=>{
 </script>
 
 <template>
-    <div class="testProject":style="{ border: borderColor + ' 2px solid' }" >
+    <div class="testProject" >
         <div class="displayItem">
             <div class="button" >
-                <RouterLink :to="`/editForm/${id}`" v-if="leftColumnButton.saleButton">
-                    <button class="editBtn" ><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
-                </RouterLink>
-
-                    <button class="deleteBtn" @click="deleteTestItem" v-if="leftColumnButton.saleButton"><font-awesome-icon icon="fa-solid fa-trash" /></button>
-
-                <RouterLink :to="`/testStageRecord/${id}`"  v-if="leftColumnButton.devButton">
-                    <button class="testRecordBtn" @click="testRecord"><font-awesome-icon icon="fa-solid fa-clipboard" /></button>
-                </RouterLink>
-         
+                <button class="editBtn" ><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
+                <button class="deleteBtn" @click="deleteTestItem" ><font-awesome-icon icon="fa-solid fa-trash" /></button>
             </div>
             <div class="displayInfo">
                 <div class="clientName">
@@ -155,16 +103,9 @@ const deleteTestItem = async()=>{
             </div>
         </div>
         <div class="departmentFunction">
-            <saleEdit 
-            v-if="rightColumnEdit.saleEdit"
-            :id="props.id" />
-            <devEdit 
-            v-if="rightColumnEdit.devEdit"
-            :id="props.id"
-            :testStage="props.testStage" />
-            <mfrEdit 
-            v-if="rightColumnEdit.mfrEdit"
-            :id="props.id" />
+            <p>生產日期</p>
+            <h3>{{ mfrDate }}</h3>
+           
         </div>
     </div>
     <!-- :style="TestitemStore.borderStyle" -->
@@ -175,7 +116,7 @@ const deleteTestItem = async()=>{
 .testProject{
     padding: 1rem;
     margin-top: 2rem;
-    // border: $pointColor 2px solid;
+    border: black 2px solid;
     border-radius: 2rem;
     
     display: grid;
@@ -188,7 +129,6 @@ const deleteTestItem = async()=>{
 
 
     .displayItem{
-        // background-color: bisque;
         padding: 1rem 0;
         grid-column: 1 / 5;
         display: flex;
@@ -198,7 +138,7 @@ const deleteTestItem = async()=>{
 
         .button{
             flex: 0.5;
-            // background-color: bisque;
+
 
              button{
 
@@ -243,21 +183,25 @@ const deleteTestItem = async()=>{
                 font-size: 2.2rem;
             }
 
-            .clientName h3,
-            .dueDate h3{
-                color: $primaryColor;
-
-            }
-            .testStage h3{
-                color: $pointColor;
-
-            }
         }
 
     }
     .departmentFunction{
-        // background-color: aquamarine;
         grid-column: 5 / 7;
+        @include layout(column,center,center);
+
+        p{
+                font-size: 0.8rem;
+                letter-spacing: 0.5rem;
+                font-weight: 700;
+
+                color: $black60;
+        }
+        h3{
+            margin: 1rem 0;
+            font-size: 2.2rem;
+            // color:$primaryColor;
+        }
     }
 
     &:hover .button button {

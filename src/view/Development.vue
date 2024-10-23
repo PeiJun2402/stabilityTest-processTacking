@@ -6,6 +6,7 @@ import { onMounted,ref, watch } from 'vue';
 
 const TestitemStore = useTestitemStore();
 
+
 const test = ref("")
 const untest = ref("")
 
@@ -26,6 +27,7 @@ onMounted(async()=>{
   TestitemStore.testItems = []
   await TestitemStore.getData();
   filterFunction();
+
 
   
 })

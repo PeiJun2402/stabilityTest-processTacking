@@ -1,4 +1,72 @@
 <script setup>
+import { useTestitemStore } from '@/pinia/testItem.js';
+import { db } from '@/firestore/firestoreInit.js';
+import { doc, updateDoc } from "firebase/firestore"; 
+import { defineProps,onMounted,ref } from 'vue';
+
+const TestitemStore = useTestitemStore();
+
+
+const props =defineProps({
+    id: {
+        required: true,
+    }
+
+})
+
+const testItem = TestitemStore.testItems.find((testItem)=>{
+        return testItem.id === props.id
+})
+
+const SaleCheckState =ref(testItem)
+
+
+const changeSaleCheckState =()=>{
+    SaleCheckState.value = TestitemStore.testItems.find((testItem)=>{
+        return testItem.id === props.id
+    })
+
+}
+
+const changeClientConfirmData = async()=>{
+    try{
+        await updateDoc(doc(db,"testItem", props.id),{
+            saleCheck:{
+                clientConfirm: !SaleCheckState.value.saleCheck.clientConfirm,
+                confirmMfr:SaleCheckState.value.saleCheck.confirmMfr
+
+            }
+
+
+    })
+
+    } catch(e){
+        console.error("Error adding document: ", e);
+
+    }
+
+
+}
+const changeConfirmMfrData = async()=>{
+    try{
+        await updateDoc(doc(db,"testItem", props.id),{
+            saleCheck:{
+                clientConfirm: SaleCheckState.value.saleCheck.clientConfirm,
+                confirmMfr:!SaleCheckState.value.saleCheck.confirmMfr
+
+            }
+        
+    })
+    location.reload();
+
+    } catch(e){
+        console.error("Error adding document: ", e);
+
+    }
+
+
+}
+
 
 
 </script>
@@ -7,11 +75,11 @@
     <div class="saleEdit">
         <form >
             <div class="confirmClient">
-                <input type="checkbox"  value="confirmClient">
+                <input type="checkbox"  v-model="SaleCheckState.saleCheck.clientConfirm" @click="changeClientConfirmData" value="confirmClient">
                 <label for="vehicle1"> 通知客戶-完成測試</label><br>
             </div>
             <div class="goToProduce">
-                <input type="checkbox"  value="goToProduce">
+                <input type="checkbox"  v-model="SaleCheckState.saleCheck.confirmMfr"  @click="changeConfirmMfrData" value="goToProduce">
                 <label for="vehicle1"> 客戶確認-進行生產排程</label><br>
             </div>
         </form>

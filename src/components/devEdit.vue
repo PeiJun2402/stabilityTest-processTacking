@@ -37,10 +37,15 @@ const buttonStyleChange= ()=>{
 
 const changeDevelopmentData = async() =>{
     changedevelopmentState();   
-
-    await updateDoc(doc(db,"testItem", props.id), {
-    development:true,
+   try{
+        await updateDoc(doc(db,"testItem", props.id), {
+        development:true,
    });
+
+    } catch(e){
+        console.error("Error adding document: ", e);
+
+    }
 
 
 }

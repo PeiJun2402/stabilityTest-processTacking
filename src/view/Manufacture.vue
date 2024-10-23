@@ -9,19 +9,20 @@ const TestitemStore = useTestitemStore();
 const mfrForm = ref("");
 const detectForm = ref(true);
 
+
 const filterFunction = ()=>{
   mfrForm.value = TestitemStore.testItems.filter((testItem)=>{
-    return testItem.development === true
+    return testItem.saleCheck.confirmMfr === true  && testItem.mfrDate === null
   })
 
-
 }
+
+
 
 const detectFormFunction =()=>{
   if( mfrForm.value.length !== 0){
     detectForm.value = !detectForm.value
   }
-  console.log(mfrForm);
 
 
 }

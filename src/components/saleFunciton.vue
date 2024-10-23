@@ -8,6 +8,10 @@ const TestitemStore = useTestitemStore();
 const testNUB = ref("")
 const untestNUB = ref("")
 
+const emit = defineEmits(['filterTestItem']);
+
+
+
 onMounted(async()=>{
   TestitemStore.testItems = []
   await TestitemStore.getData();
@@ -21,6 +25,15 @@ onMounted(async()=>{
 
   testNUB.value = test.length
   untestNUB.value = untest.length
+
+
+  const handleEmit = () => {
+    emit('filterTestItem', TestitemStore.testItems);
+     
+
+};
+
+handleEmit()
 
   
 

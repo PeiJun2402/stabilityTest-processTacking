@@ -23,6 +23,7 @@ const testItem = ref({
     testStage:"未執行",
     development:false,
     manufacture:false,
+    mfrDate:null,
     remark:null,
     borderColor:"#58A9C3",
     test1Result:null,
@@ -61,6 +62,10 @@ const testItem = ref({
       test4PassButton:false,
       test5PassButton:false,
       changeColor:false
+    },
+    saleCheck:{
+      clientConfirm:false,
+      confirmMfr:false
     }
 
 
@@ -81,6 +86,7 @@ const addTestItem = async()=>{
       testStage:"未執行",
       development:false,
       manufacture:false,
+      mfrDate:null,
       remark:testItem.value.remark,
       borderColor:"#58A9C3",
       test1Result:null,
@@ -119,6 +125,10 @@ const addTestItem = async()=>{
       test4PassButton:false,
       test5PassButton:false,
       changeColor:false
+    },    
+    saleCheck:{
+      clientConfirm:false,
+      confirmMfr:false
     }
 
 
