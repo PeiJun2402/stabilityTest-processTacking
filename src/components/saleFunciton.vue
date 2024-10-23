@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink,useRoute } from 'vue-router';
 import { useTestitemStore } from '@/pinia/testItem.js'
 
 const TestitemStore = useTestitemStore();
+
 
 const testNUB = ref("")
 const untestNUB = ref("")
@@ -17,7 +18,7 @@ onMounted(async()=>{
   await TestitemStore.getData();
 
   const test = TestitemStore.testItems.filter((testItem)=>{
-    return testItem.testStage !== "未執行"
+    return testItem.testStage !== "未執行" && testItem.testStage !== "Finished" 
   })
   const untest = TestitemStore.testItems.filter((testItem)=>{
     return testItem.testStage == "未執行"
