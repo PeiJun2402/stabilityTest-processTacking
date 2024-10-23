@@ -6,6 +6,8 @@ import Manufacture from '@/view/Manufacture.vue';
 import ApplyTestForm from '@/view/ApplyTestForm.vue';  
 import EditForm from '@/view/EditForm.vue'
 import TestStageRecord from '@/view/TestStageRecord.vue'
+import HomePage from '@/view/HomePage.vue'
+import NotFoundPage from '@/view/NotFoundPage.vue'
 
 
 const router = createRouter({
@@ -13,6 +15,10 @@ const router = createRouter({
     history:createWebHistory(import.meta.env.BASE_URL),
 
     routes:[
+        { path:'/',
+        name:'HomePage',
+        component:HomePage 
+        },
         { path:'/development',
         name:'Development',
         component:Development 
@@ -36,6 +42,10 @@ const router = createRouter({
         { path:'/testStageRecord/:id',
         name:'TestStageRecord',
         component: TestStageRecord
+        },
+        { path:'/:catchAll(.*)',
+        name:'NotFoundPage',
+        component: NotFoundPage
         },
 
     ]
