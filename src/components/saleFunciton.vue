@@ -18,7 +18,7 @@ onMounted(async()=>{
   await TestitemStore.getData();
 
   const test = TestitemStore.testItems.filter((testItem)=>{
-    return testItem.testStage !== "未執行" && testItem.testStage !== "Finished" 
+    return testItem.testStage !== "未執行" && testItem.manufacture === false 
   })
   const untest = TestitemStore.testItems.filter((testItem)=>{
     return testItem.testStage == "未執行"

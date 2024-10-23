@@ -21,13 +21,6 @@ const testItem = TestitemStore.testItems.find((testItem)=>{
 const SaleCheckState =ref(testItem)
 
 
-const changeSaleCheckState =()=>{
-    SaleCheckState.value = TestitemStore.testItems.find((testItem)=>{
-        return testItem.id === props.id
-    })
-
-}
-
 const changeClientConfirmData = async()=>{
     try{
         await updateDoc(doc(db,"testItem", props.id),{

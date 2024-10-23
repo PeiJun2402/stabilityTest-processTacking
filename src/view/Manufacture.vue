@@ -12,7 +12,7 @@ const detectForm = ref(true);
 
 const filterFunction = ()=>{
   mfrForm.value = TestitemStore.testItems.filter((testItem)=>{
-    return testItem.saleCheck.confirmMfr === true  && testItem.mfrDate === null
+    return testItem.saleCheck.confirmMfr === true  && testItem.manufacture === false
   })
 
 }

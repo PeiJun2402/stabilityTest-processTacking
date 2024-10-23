@@ -31,7 +31,8 @@ const updateMfrDate = async()=>{
         try{
       
       await updateDoc(doc(db,"testItem", props.id), {
-        mfrDate: testItem.value.mfrDate
+        mfrDate: testItem.value.mfrDate,
+        manufacture:true
 
 
       });
