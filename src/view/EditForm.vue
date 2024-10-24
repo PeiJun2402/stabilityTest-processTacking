@@ -10,50 +10,40 @@ const router =useRouter();
 const testItemId = route.params.id;
 const TestitemStore = useTestitemStore();
 
+const testItem = ref({
+    formID:null,
+    clientName:null,
+    dueDate:null,
+    productML:null,
+    sampleQty:null,
+    ingredientForm:null,
+    productPackage:null,
+    remark:null,
+})
+
+
 onMounted( async()=>{
   TestitemStore.testItems = []
-  await TestitemStore.getData();
-  
-  
-
+  try {
+    await TestitemStore.getData();
+    findFuntion();
+   
+  } 
+  catch (error) {
+    console.error('Error loading data:', error);
+  } 
 
 })
 
-
-
-// const itemform = computed(()=>{
-//     TestitemStore.testItems.find((testItem)=>{
-//         console.log("hi")
-//     return testItem.id === testItemId
-
-   
-
-// })
-
-// })
-const itemform =
-    TestitemStore.testItems.find((testItem)=>{
+const findFuntion =() =>{
+  testItem.value = TestitemStore.testItems.find((testItem)=>{
     return testItem.id === testItemId
-
-   
-
 })
+} 
 
 
 
 
-const testItem = ref({
-    formID:itemform.formID,
-    clientName:itemform.clientName,
-    dueDate:itemform.dueDate,
-    productML:itemform.productML,
-    sampleQty:itemform.sampleQty,
-    ingredientForm:itemform.ingredientForm,
-    productPackage:itemform.productPackage,
-    remark:itemform.remark,
-    
-
-})
 
 const updateTestItem = async()=>{
     try{

@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { RouterLink,useRoute } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import { useTestitemStore } from '@/pinia/testItem.js'
 
 const TestitemStore = useTestitemStore();

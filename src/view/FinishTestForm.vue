@@ -11,59 +11,68 @@ const router =useRouter();
 const testItemId = route.params.id;
 const TestitemStore = useTestitemStore();
 
-onMounted( async()=>{
-//   TestitemStore.testItems = []
-  await TestitemStore.getData();
-  
-  
-
-
-})
-
-const itemform = TestitemStore.testItems.find((testItem)=>{
-    return testItem.id === testItemId
-})
-
-
 const testItem = ref({
     //client data
-    formID:itemform.formID,
-    clientName:itemform.clientName,
-    dueDate:itemform.dueDate,
-    productML:itemform.productML,
-    sampleQty:itemform.sampleQty,
-    ingredientForm:itemform.ingredientForm,
-    productPackage:itemform.productPackage,
-    remark:itemform.remark,
+    formID:null,
+    clientName:null,
+    dueDate:null,
+    productML:null,
+    sampleQty:null,
+    ingredientForm:null,
+    productPackage:null,
+    remark:null,
 
     //department data
-    development:itemform.development,
-    manufacture:itemform.manufacture,
-    mfrDate:itemform.mfrDate,
+    development:null,
+    manufacture:null,
+    mfrDate:null,
     saleCheck:{
-      clientConfirm:itemform.saleCheck.clientConfirm,
-      confirmMfr:itemform.saleCheck.confirmMfr
+      clientConfirm:null,
+      confirmMfr:null
     },
 
     //test data
-    test1Result:itemform.test1Result,
-    test2Result:{firstTemRecord:itemform.test2Result.firstTemRecord, secondTemRecord:itemform.test2Result.secondTemRecord, thirdTemRecord:itemform.test2Result.thirdTemRecord, fourthTemRecord:itemform.test2Result.fourthTemRecord},
-    test3Result:itemform.test3Result,
+    test1Result:null,
+    test2Result:{firstTemRecord:null, secondTemRecord:null, thirdTemRecord:null, fourthTemRecord:null},
+    test3Result:null,
     test4Result:{
-      test4Record:itemform.test4Result.test4Record,
-      bacteria1:itemform.test4Result.bacteria1,
-      bacteria2:itemform.test4Result.bacteria2,
-      bacteria3:itemform.test4Result.bacteria3,
+      test4Record:null,
+      bacteria1:null,
+      bacteria2:null,
+      bacteria3:null,
 
     },
     test5Result:{
-      emulsification:itemform.test5Result.emulsification,
-      oilWaterSeparation:itemform.test5Result.oilWaterSeparation
+      emulsification:null,
+      oilWaterSeparation:null
 
     },
     
 
 })
+
+onMounted( async()=>{
+  TestitemStore.testItems = []
+  try {
+    await TestitemStore.getData();
+    findFuntion();
+   
+  } 
+  catch (error) {
+    console.error('Error loading data:', error);
+  } 
+
+})
+
+
+const findFuntion =() =>{
+  testItem.value = TestitemStore.testItems.find((testItem)=>{
+    return testItem.id === testItemId
+})
+} 
+
+
+
 
 const updateTestItem = async()=>{
     try{
