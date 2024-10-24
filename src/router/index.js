@@ -8,6 +8,7 @@ import EditForm from '@/view/EditForm.vue'
 import TestStageRecord from '@/view/TestStageRecord.vue'
 import HomePage from '@/view/HomePage.vue'
 import NotFoundPage from '@/view/NotFoundPage.vue'
+import FinishTestForm from '@/view/FinishTestForm.vue'
 
 
 const router = createRouter({
@@ -42,6 +43,10 @@ const router = createRouter({
         { path:'/testStageRecord/:id',
         name:'TestStageRecord',
         component: TestStageRecord
+        },
+        { path:'/FinishTestForm/:id',
+        name:'FinishTestForm',
+        component: FinishTestForm
         },
         { path:'/:catchAll(.*)',
         name:'NotFoundPage',

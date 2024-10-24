@@ -36,6 +36,9 @@ const props = defineProps({
     confirmMfr: {
         required: true,
     },
+    development: {
+        required: true,
+    },
 })
 
 
@@ -59,7 +62,7 @@ const departmentURL = ref(route.path);
 onMounted(()=>{
     if(departmentURL.value === "/sale"){
 
-        if(props.testStage === "Finished"){
+        if(props.development === true){
             rightColumnEdit.value.saleEdit = true
             rightColumnEdit.value.devEdit = false
             rightColumnEdit.value.mfrEdit = false

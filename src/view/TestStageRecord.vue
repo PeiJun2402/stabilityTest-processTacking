@@ -474,11 +474,11 @@ const updateTest5Record = async()=>{
                     <form class="test5Form testForm">
                                 <label for="thirdTemRecord">測試結果</label>
                                 <div class="firstCheck">
-                                    <input type="checkbox" :readonly="test5PassButton">
+                                    <input type="checkbox" v-model="testStageRecord.test5Result.emulsification" :readonly="test5PassButton">
                                     <label class="checkboxResult">確認乳化完全</label><br>
                                 </div>
                                 <div class="secondCheck">
-                                    <input type="checkbox" :readonly="test5PassButton">
+                                    <input type="checkbox"  v-model="testStageRecord.test5Result.oilWaterSeparation" :readonly="test5PassButton">
                                     <label class="checkboxResult">無油水分離現象</label><br>
                                 </div>
                     </form>
@@ -690,7 +690,6 @@ const updateTest5Record = async()=>{
                 //TEST3
                 .test3Form{
                     padding-bottom: 4rem ;
-                    // background-color: aqua;
 
                     textarea{
                         width: 100%;

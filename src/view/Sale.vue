@@ -41,10 +41,11 @@ const receiveData = (data) => {
       <testProject
       :clientName="testItem.clientName"
       :dueDate="testItem.dueDate"
-      :testStage = "testItem.testStage"
-      :borderColor = "testItem.borderColor"
+      :testStage="testItem.testStage"
+      :borderColor="testItem.borderColor"
       :id="testItem.id"
       :confirmMfr="testItem.saleCheck.confirmMfr"
+      :development="testItem.development"
       />
     </li>
 

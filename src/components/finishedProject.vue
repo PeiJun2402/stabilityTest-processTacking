@@ -1,8 +1,6 @@
 <script setup>
-import saleEdit from '@/components/saleEdit.vue'
-import devEdit from '@/components/devEdit.vue'
-import mfrEdit from '@/components/mfrEdit.vue'
-import { RouterLink,useRoute } from 'vue-router';
+
+import { useRoute ,RouterLink } from 'vue-router';
 import { ref,computed, watch, onMounted,defineProps } from 'vue';
 import { useTestitemStore } from '@/pinia/testItem.js'
 import { db } from '@/firestore/firestoreInit.js';
@@ -56,9 +54,7 @@ const leftColumnButton = ref({
 
 
 
-onMounted(()=>{
 
-})
 
 
 
@@ -76,6 +72,11 @@ const deleteTestItem = async()=>{
    
 }
 
+const seeFinishTestForm =()=>{
+
+
+}
+
 
 
 </script>
@@ -84,7 +85,10 @@ const deleteTestItem = async()=>{
     <div class="testProject" >
         <div class="displayItem">
             <div class="button" >
-                <button class="editBtn" ><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
+                <RouterLink :to="`/FinishTestForm/${id}`">
+                    <button class="editBtn"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></button>
+                </RouterLink>
+               
                 <button class="deleteBtn" @click="deleteTestItem" ><font-awesome-icon icon="fa-solid fa-trash" /></button>
             </div>
             <div class="displayInfo">
@@ -108,7 +112,6 @@ const deleteTestItem = async()=>{
            
         </div>
     </div>
-    <!-- :style="TestitemStore.borderStyle" -->
 
 </template>
 
