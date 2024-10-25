@@ -3,39 +3,31 @@ import { useTestitemStore } from '@/pinia/testItem.js';
 import { db } from '@/firestore/firestoreInit.js';
 import { doc, updateDoc } from "firebase/firestore"; 
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 
 const route =useRoute();
 const testItemId = route.params.id;
 const TestitemStore = useTestitemStore();
 
-
-const itemform =
-    TestitemStore.testItems.find((testItem)=>{
-    return testItem.id === testItemId
-
-   
-
-})
-
-
 const testStageRecord =ref({
-    sampleQty:itemform.sampleQty,
-    productPackage:itemform.productPackage,
-    testStage:itemform.testStage,
-    test1Result:itemform.test1Result,
+    clientName:null,
+    dueDate:null,
+    sampleQty:null,
+    productPackage:null,
+    testStage:null,
+    test1Result:null,
     test2Result:{
-        firstTemRecord:itemform.test2Result.firstTemRecord, 
-        secondTemRecord:itemform.test2Result.secondTemRecord, 
-        thirdTemRecord:itemform.test2Result.thirdTemRecord, 
-        fourthTemRecord:itemform.test2Result.fourthTemRecord
+        firstTemRecord:null, 
+        secondTemRecord:null, 
+        thirdTemRecord:null, 
+        fourthTemRecord:null
     },
-    test3Result:itemform.test3Result,
+    test3Result:null,
     test4Result:{
-      test4Record:itemform.test4Result.test4Record,
-      bacteria1:itemform.test4Result.bacteria1,
-      bacteria2:itemform.test4Result.bacteria2,
-      bacteria3:itemform.test4Result.bacteria3,
+      test4Record:null,
+      bacteria1:null,
+      bacteria2:null,
+      bacteria3:null,
 
     },
     test5Result:{
@@ -44,30 +36,54 @@ const testStageRecord =ref({
 
     },
     testPassed:{
-      test1Passed:itemform.testPassed.test1Passed,
-      test2Passed:itemform.testPassed.test2Passed,
-      test3Passed:itemform.testPassed.test3Passed,
-      test4Passed:itemform.testPassed.test4Passed,
-      test5Passed:itemform.testPassed.test5Passed,
+      test1Passed:null,
+      test2Passed:null,
+      test3Passed:null,
+      test4Passed:null,
+      test5Passed:null,
     },
     testcheck:{
-      test2check:itemform.testcheck.test2check,
-      test3check:itemform.testcheck.test3check,
-      test4check:itemform.testcheck.test4check,
-      test5check:itemform.testcheck.test5check,
+      test2check:null,
+      test3check:null,
+      test4check:null,
+      test5check:null,
 
     },
     testPassButton:{
-      test1PassButton:itemform.testPassButton.test1PassButton,
-      test2PassButton:itemform.testPassButton.test2PassButton,
-      test3PassButton:itemform.testPassButton.test3PassButton,
-      test4PassButton:itemform.testPassButton.test4PassButton,
-      test5PassButton:itemform.testPassButton.test5PassButton,
-      changeColor:itemform.testPassButton.changeColor
+      test1PassButton:null,
+      test2PassButton:null,
+      test3PassButton:null,
+      test4PassButton:null,
+      test5PassButton:null,
+      changeColor:null
     }
 
 
 })
+
+onMounted( async()=>{
+  TestitemStore.testItems = []
+  try {
+    await TestitemStore.getData();
+    findFunction();
+   
+  } 
+  catch (error) {
+    console.error('Error loading data:', error);
+  } 
+
+})
+
+
+const findFunction=()=>{
+    testStageRecord.value = TestitemStore.testItems.find((testItem)=>{
+    return testItem.id === testItemId
+})
+}
+    
+
+
+
 
 const updateTest1Record = async()=>{
     testStageRecord.value.testPassButton.changeColor = !testStageRecord.value.testPassButton.changeColor;
@@ -76,22 +92,22 @@ const updateTest1Record = async()=>{
     testStageRecord.value.testPassButton.test1PassButton = !testStageRecord.value.testPassButton.test1PassButton;
 
 
-    if(testStageRecord.value.testStage === "未執行"){
-        testStageRecord.value.testStage = "Test1"
+    // if(testStageRecord.value.testStage === "未執行"){
+    //     testStageRecord.value.testStage = "Test1"
 
-    }else{
-        testStageRecord.value.testStage = "未執行"
+    // }else{
+    //     testStageRecord.value.testStage = "未執行"
 
-    }
+    // }
 
     
 
     try{
       
         await updateDoc(doc(db,"testItem", testItemId), {
-            sampleQty:testStageRecord.value.sampleQty,
-            productPackage:testStageRecord.value.productPackage,
-            testStage:testStageRecord.value.testStage,
+            // sampleQty:testStageRecord.value.sampleQty,
+            // productPackage:testStageRecord.value.productPackage,
+            // testStage:testStageRecord.value.testStage,
             test1Result:testStageRecord.value.test1Result,
             testPassed:{
             test1Passed:testStageRecord.value.testPassed.test1Passed,
@@ -130,13 +146,17 @@ const updateTest2Record = async()=>{
     testStageRecord.value.testcheck.test3check = !testStageRecord.value.testcheck.test3check;
     testStageRecord.value.testPassButton.test2PassButton = !testStageRecord.value.testPassButton.test2PassButton;
 
-    if(testStageRecord.value.testStage === "Test1"){
-        testStageRecord.value.testStage = "Test2"
 
-    }else{
-        testStageRecord.value.testStage = "Test1"
+    // if(testStageRecord.value.testPassButton.test1PassButton === true &&
+    // testStageRecord.value.testPassButton.test2PassButton === true
+    // ){
+    //     testStageRecord.value.testStage = "Test2"
 
-    }
+    // }
+    // else{
+    //     testStageRecord.value.testStage = "Test1"
+
+    // }
 
     
 
@@ -144,7 +164,7 @@ const updateTest2Record = async()=>{
       
         await updateDoc(doc(db,"testItem", testItemId), {
            
-            testStage:testStageRecord.value.testStage,
+            // testStage:testStageRecord.value.testStage,
             test2Result:{
                 firstTemRecord:testStageRecord.value.test2Result.firstTemRecord, 
                 secondTemRecord:testStageRecord.value.test2Result.secondTemRecord, 
@@ -191,13 +211,13 @@ const updateTest3Record = async()=>{
     testStageRecord.value.testcheck.test4check = !testStageRecord.value.testcheck.test4check;
     testStageRecord.value.testPassButton.test3PassButton = !testStageRecord.value.testPassButton.test3PassButton;
 
-    if(testStageRecord.value.testStage === "Test2"){
-        testStageRecord.value.testStage = "Test3"
+    // if(testStageRecord.value.testPassButton.test2PassButton === true){
+    //     testStageRecord.value.testStage = "Test3"
 
-    }else{
-        testStageRecord.value.testStage = "Test2"
+    // }else{
+    //     testStageRecord.value.testStage = "Test2"
 
-    }
+    // }
 
     
 
@@ -205,7 +225,7 @@ const updateTest3Record = async()=>{
       
         await updateDoc(doc(db,"testItem", testItemId), {
            
-            testStage:testStageRecord.value.testStage,
+            // testStage:testStageRecord.value.testStage,
             test3Result:testStageRecord.value.test3Result,
             testPassed:{
             test1Passed:testStageRecord.value.testPassed.test1Passed,
@@ -246,13 +266,13 @@ const updateTest4Record = async()=>{
     testStageRecord.value.testcheck.test5check = !testStageRecord.value.testcheck.test5check;
     testStageRecord.value.testPassButton.test4PassButton = !testStageRecord.value.testPassButton.test4PassButton;
 
-    if(testStageRecord.value.testStage === "Test3"){
-        testStageRecord.value.testStage = "Test4"
+    // if(testStageRecord.value.testPassButton.test3PassButton === true){
+    //     testStageRecord.value.testStage = "Test4"
 
-    }else{
-        testStageRecord.value.testStage = "Test3"
+    // }else{
+    //     testStageRecord.value.testStage = "Test3"
 
-    }
+    // }
 
 
     
@@ -261,7 +281,7 @@ const updateTest4Record = async()=>{
       
         await updateDoc(doc(db,"testItem", testItemId), {
            
-            testStage:testStageRecord.value.testStage,
+            // testStage:testStageRecord.value.testStage,
             test4Result:{
             test4Record:testStageRecord.value.test4Result.test4Record,
             bacteria1:testStageRecord.value.test4Result.bacteria1,
@@ -308,13 +328,13 @@ const updateTest5Record = async()=>{
     testStageRecord.value.testPassButton.test5PassButton = !testStageRecord.value.testPassButton.test5PassButton;
 
 
-    if(testStageRecord.value.testStage === "Test4"){
-        testStageRecord.value.testStage = "Finished"
+    // if(testStageRecord.value.testPassButton.test4PassButton === true){
+    //     testStageRecord.value.testStage = "Finished"
 
-    }else{
-        testStageRecord.value.testStage = "Test4"
+    // }else{
+    //     testStageRecord.value.testStage = "Test4"
 
-    }
+    // }
     
 
 
@@ -322,7 +342,7 @@ const updateTest5Record = async()=>{
       
         await updateDoc(doc(db,"testItem", testItemId), {
            
-            testStage:testStageRecord.value.testStage,
+            // testStage:testStageRecord.value.testStage,
             test5Result:{
             emulsification:testStageRecord.value.test5Result.emulsification,
             oilWaterSeparation:testStageRecord.value.test5Result.oilWaterSeparation
@@ -363,6 +383,48 @@ const updateTest5Record = async()=>{
 }
 
 
+// watch test pass button state
+watch(() => [
+    testStageRecord.value.testPassButton.test1PassButton,
+    testStageRecord.value.testPassButton.test2PassButton,
+    testStageRecord.value.testPassButton.test3PassButton,
+    testStageRecord.value.testPassButton.test4PassButton,
+    testStageRecord.value.testPassButton.test5PassButton
+  ], 
+  async (newValues) => {
+    const [button1, button2, button3, button4, button5] = newValues;
+    if (button1 === true && button2 === true && button3 === true && button4 === true && button5 === true) {
+      testStageRecord.value.testStage = "Finished";
+    }
+    if (button1 === false) {
+      testStageRecord.value.testStage = "未執行";
+    }
+    if (button2 === false) {
+      testStageRecord.value.testStage = "Test1";
+    }
+    if (button3 === false) {
+      testStageRecord.value.testStage = "Test2";
+    }
+    if (button4 === false) {
+      testStageRecord.value.testStage = "Test3";
+    }
+    if (button5 === false) {
+      testStageRecord.value.testStage = "Test4";
+    }
+
+    try{
+        await updateDoc(doc(db,"testItem", testItemId), {
+        testStage:testStageRecord.value.testStage,
+
+    })  
+    }
+    catch (error) {
+      console.error("Error updating document: ", error);
+    }
+
+    
+  })
+
 
 </script>
 
@@ -371,11 +433,11 @@ const updateTest5Record = async()=>{
         <div class="displayInfo">
                 <div class="clientName">
                     <p>客戶名稱</p>
-                    <h3>{{ itemform.clientName }}</h3>
+                    <h3>{{ testStageRecord.clientName }}</h3>
                 </div>
                 <div class="dueDate">
                     <p>預計生產日期</p>
-                    <h3>{{ itemform.dueDate }}</h3>
+                    <h3>{{ testStageRecord.dueDate }}</h3>
                 </div>
                 <div class="testStage">
                     <p>檢測階段</p>
@@ -398,7 +460,7 @@ const updateTest5Record = async()=>{
                         </div>
                         <div class="test1Result">
                             <label for="test1Result">結果</label>
-                            <input type="text" id="test1Result"  v-model="testStageRecord.test1Result" :readonly="test1PassButton">
+                            <input type="text" id="test1Result"  v-model="testStageRecord.test1Result" :readonly="testStageRecord.testPassButton.test1PassButton">
                         </div>
                         
                     </form>
@@ -412,21 +474,21 @@ const updateTest5Record = async()=>{
                         <div class="left">
                             <div class="firstTemRecord">
                                 <label for="firstTemRecord">第1次循環溫度</label>
-                                <input type="text" id="firstTemRecord" v-model="testStageRecord.test2Result.firstTemRecord" :readonly="test2PassButton">
+                                <input type="text" id="firstTemRecord" v-model="testStageRecord.test2Result.firstTemRecord" :readonly="testStageRecord.testPassButton.test2PassButton">
                             </div>
                             <div class="secondTemRecord">
                                 <label for="secondTemRecord">第2次循環溫度</label>
-                                <input type="text" id="secondTemRecord" v-model="testStageRecord.test2Result.secondTemRecord" :readonly="test2PassButton">
+                                <input type="text" id="secondTemRecord" v-model="testStageRecord.test2Result.secondTemRecord" :readonly="testStageRecord.testPassButton.test2PassButton">
                             </div>
                         </div>
                         <div class="right">           
                             <div class="thirdTemRecord">
                                 <label for="thirdTemRecord">第3次循環溫度</label>
-                                <input type="text" id="thirdTemRecord" v-model="testStageRecord.test2Result.thirdTemRecord" :readonly="test2PassButton">
+                                <input type="text" id="thirdTemRecord" v-model="testStageRecord.test2Result.thirdTemRecord" :readonly="testStageRecord.testPassButton.test2PassButton">
                             </div>
                             <div class="fourthTemRecord">
                                 <label for="fourthTemRecord">第4次循環溫度</label>
-                                <input type="text" id="fourthTemRecord" v-model="testStageRecord.test2Result.fourthTemRecord" :readonly="test2PassButton">
+                                <input type="text" id="fourthTemRecord" v-model="testStageRecord.test2Result.fourthTemRecord" :readonly="testStageRecord.testPassButton.test2PassButton">
                             </div>
                         </div>
                     </form>
@@ -438,7 +500,7 @@ const updateTest5Record = async()=>{
                 <div class="testRecord">
                     <form class="test3Form testForm">
                         <label for="constantHUM&TEM">檢測紀錄</label>
-                        <textarea id="constantHUM&TEM" v-model="testStageRecord.test3Result" :readonly="test3PassButton">25c</textarea>
+                        <textarea id="constantHUM&TEM" v-model="testStageRecord.test3Result" :readonly="testStageRecord.testPassButton.test3PassButton">25c</textarea>
                     </form>
                     <button type="submit" :class="{ testPassed:testStageRecord.testPassed.test3Passed, test3PassHidden:testStageRecord.testcheck.test3check }" class="test3Pass  unTestPassed" @click="updateTest3Record">{{  testStageRecord.testPassButton.test3PassButton?"Finished":"Unfinished" }}</button>
                 </div>
@@ -450,17 +512,17 @@ const updateTest5Record = async()=>{
                         <div class="left">
                             <div class="test4Record">
                                 <label for="test4Record">觀測紀錄</label>
-                                <textarea id="test4Record" v-model="testStageRecord.test4Result.test4Record" :readonly="test4PassButton">29c</textarea>
+                                <textarea id="test4Record" v-model="testStageRecord.test4Result.test4Record" :readonly="testStageRecord.testPassButton.test4PassButton">29c</textarea>
                             </div>
                         </div>
                         <div class="right">           
                             <div class="fourthTemRecord">
                                 <label for="fourthRecord">驗菌結果</label>
-                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria1" :readonly="test4PassButton">
+                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria1" :disabled="testStageRecord.testPassButton.test4PassButton">
                                 <label class="checkboxResult" >未驗出大腸桿菌</label><br>
-                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria2" :readonly="test4PassButton">
+                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria2" :disabled="testStageRecord.testPassButton.test4PassButton">
                                 <label class="checkboxResult">未驗出綠膿桿菌</label><br>
-                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria3" :readonly="test4PassButton">
+                                <input type="checkbox" v-model="testStageRecord.test4Result.bacteria3" :disabled="testStageRecord.testPassButton.test4PassButton">
                                 <label class="checkboxResult">未驗出金黃色葡萄球菌</label><br>
                             </div>
                         </div>
@@ -474,11 +536,11 @@ const updateTest5Record = async()=>{
                     <form class="test5Form testForm">
                                 <label for="thirdTemRecord">測試結果</label>
                                 <div class="firstCheck">
-                                    <input type="checkbox" v-model="testStageRecord.test5Result.emulsification" :readonly="test5PassButton">
+                                    <input type="checkbox" v-model="testStageRecord.test5Result.emulsification" :disabled="testStageRecord.testPassButton.test5PassButton">
                                     <label class="checkboxResult">確認乳化完全</label><br>
                                 </div>
                                 <div class="secondCheck">
-                                    <input type="checkbox"  v-model="testStageRecord.test5Result.oilWaterSeparation" :readonly="test5PassButton">
+                                    <input type="checkbox"  v-model="testStageRecord.test5Result.oilWaterSeparation" :disabled="testStageRecord.testPassButton.test5PassButton">
                                     <label class="checkboxResult">無油水分離現象</label><br>
                                 </div>
                     </form>

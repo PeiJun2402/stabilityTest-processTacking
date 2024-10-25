@@ -243,11 +243,11 @@ const backToMfr =async()=>{
                         <div class="right">           
                             <div class="fourthTemRecord">
                                 <label for="fourthRecord">驗菌結果</label>
-                                <input type="checkbox" v-model="testItem.test4Result.bacteria1" readonly>
+                                <input type="checkbox" v-model="testItem.test4Result.bacteria1" disabled>
                                 <label class="checkboxResult" >未驗出大腸桿菌</label><br>
-                                <input type="checkbox" v-model="testItem.test4Result.bacteria2" readonly>
+                                <input type="checkbox" v-model="testItem.test4Result.bacteria2" disabled>
                                 <label class="checkboxResult">未驗出綠膿桿菌</label><br>
-                                <input type="checkbox" v-model="testItem.test4Result.bacteria3" readonly>
+                                <input type="checkbox" v-model="testItem.test4Result.bacteria3" disabled>
                                 <label class="checkboxResult">未驗出金黃色葡萄球菌</label><br>
                             </div>
                         </div>
@@ -260,11 +260,11 @@ const backToMfr =async()=>{
                     <form class="test5Form testForm">
                         <label for="thirdTemRecord" >測試結果</label>
                         <div class="firstCheck">
-                            <input type="checkbox" v-model="testItem.test5Result.emulsification" readonly>
+                            <input type="checkbox" v-model="testItem.test5Result.emulsification" disabled>
                             <label class="checkboxResult">確認乳化完全</label><br>
                         </div>
                         <div class="secondCheck">
-                            <input type="checkbox"  v-model="testItem.test5Result.oilWaterSeparation" readonly>
+                            <input type="checkbox"  v-model="testItem.test5Result.oilWaterSeparation" disabled>
                             <label class="checkboxResult">無油水分離現象</label><br>
                         </div>
                     </form>
