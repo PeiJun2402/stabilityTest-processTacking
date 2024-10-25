@@ -22,3 +22,13 @@
 * 能隨時確認檢驗階段
 
 **研發部門 devlopment**
+
+
+### 開發工具使用
+HTML
+CSS&SCSS - 建立樣式
+javascript 搭配vue - 撰寫應用邏輯
+vite - 打包工具
+pinia - 管理資料狀態
+firestore - 後端資料庫使用
+figma - 製作網頁畫面架構與樣式
