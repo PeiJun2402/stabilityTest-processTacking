@@ -60,7 +60,8 @@
 
 
 ### 使用流程講解
-![安定性測驗流程追蹤_程式說明_工作區域 1](https://github.com/user-attachments/assets/b445a741-9491-429e-bc9f-e398e57036dc)
+![安定性測驗流程追蹤_程式說明_工作區域 1](https://github.com/user-attachments/assets/177ff3b3-8089-432f-8b13-5bc7a748bdc8)
+
 
 ---
 
