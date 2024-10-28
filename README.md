@@ -85,7 +85,7 @@
 * HTML - 建立vue框架
 * CSS&SCSS - 建立樣式
 * javascript 搭配vue - 撰寫應用邏輯
-* vite - 打包工具
+* vite - 建構和打包工具
 * pinia - 管理資料狀態
 * firebase - 後端資料庫使用
 * figma - 製作網頁畫面架構與樣式 (https://www.figma.com/design/pcEoOg7zf8tGbom1aV3Mz2/vue--Stability-Test---Process-Tacking--project?node-id=0-1&m=dev&t=MjQHjdiW1nsM0hxE-1)
