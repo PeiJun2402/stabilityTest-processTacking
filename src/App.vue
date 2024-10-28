@@ -1,6 +1,28 @@
 <script setup>
 import { RouterView} from 'vue-router';
 import  department from '@/components/department.vue';
+import { onMounted, ref } from 'vue';
+
+const mobile = ref(null)
+const chickWidth = ()=>{
+  const windowWidth = window.innerWidth;
+  if(windowWidth < 750){
+    mobile.value = true
+
+  }else{
+    mobile.value = false
+
+  }
+
+}
+
+onMounted(()=>{
+  chickWidth(),
+  window.addEventListener("resize",chickWidth)
+})
+
+console.log(window.innerWidth)
+console.log(mobile)
 
 
 
@@ -11,9 +33,18 @@ import  department from '@/components/department.vue';
 </script>
 
 <template>
-  <department />
-  <div class="contentSection div80">
-    <RouterView/>
+  <div  v-if="!mobile">
+      <department />
+    <div class="contentSection div80">
+      <RouterView/>
+    </div>
+    
+  </div>
+
+
+  <div v-else class="mobileVersion">
+    <h3>此應用程式僅支援電腦版本</h3>
+    <p>this application is not supported on mobile device</p>
   </div>
   
 
@@ -31,6 +62,14 @@ import  department from '@/components/department.vue';
   border-radius: 2rem;
 
   
+}
+
+.mobileVersion{
+  width: 100vw;
+  height: 100vh;
+  background-color: $black70;
+  @include layout(column,center,center);
+
 }
 
 </style>
