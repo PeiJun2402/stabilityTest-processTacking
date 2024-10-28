@@ -1,7 +1,7 @@
 {
   "home":"https://peijun2402.github.io/stabilityTest-processTacking/",
   "name": "stabilitytest-processtacking",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
