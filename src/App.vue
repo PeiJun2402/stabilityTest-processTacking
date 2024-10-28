@@ -21,9 +21,6 @@ onMounted(()=>{
   window.addEventListener("resize",chickWidth)
 })
 
-console.log(window.innerWidth)
-console.log(mobile)
-
 
 
 
@@ -38,6 +35,9 @@ console.log(mobile)
     <div class="contentSection div80">
       <RouterView/>
     </div>
+    <p>此網站為練習作品，無任何商業用途2024</p>
+
+
     
   </div>
 
@@ -61,8 +61,16 @@ console.log(mobile)
 
   border-radius: 2rem;
 
+ 
+
   
 }
+p{
+    margin-bottom: 2rem;
+    text-align: center;
+    color: $gray20;
+    letter-spacing: .5rem;
+  }
 
 .mobileVersion{
   width: 100vw;
