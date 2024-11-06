@@ -36,7 +36,7 @@ const updateMfrDate = async()=>{
 
 
       });
-      location.reload();
+       window.location.href = '/stabilityTest-processTacking';
 
   }
   catch(e){

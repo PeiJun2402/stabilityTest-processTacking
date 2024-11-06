@@ -114,7 +114,7 @@ onMounted(()=>{
 const deleteTestItem = async()=>{
     try{
         await deleteDoc(doc(db,"testItem",props.id))
-        location.reload();
+        window.location.href = '/stabilityTest-processTacking'
     }
     catch(e){
     console.error("Error adding document: ", e);

@@ -50,8 +50,7 @@ const changeConfirmMfrData = async()=>{
             }
         
     })
-    location.reload();
-
+     window.location.href = '/stabilityTest-processTacking';
     } catch(e){
         console.error("Error adding document: ", e);
 
