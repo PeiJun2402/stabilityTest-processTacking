@@ -63,7 +63,7 @@ const leftColumnButton = ref({
 const deleteTestItem = async()=>{
     try{
         await deleteDoc(doc(db,"testItem",props.id))
-        location.reload();
+        window.location.href = '/stabilityTest-processTacking';
     }
     catch(e){
     console.error("Error adding document: ", e);
@@ -71,12 +71,6 @@ const deleteTestItem = async()=>{
 }
    
 }
-
-const seeFinishTestForm =()=>{
-
-
-}
-
 
 
 </script>
