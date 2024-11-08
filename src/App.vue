@@ -78,6 +78,13 @@ p{
   background-color: $black70;
   @include layout(column,center,center);
 
+  h3{
+    color: white;
+  }
+  p{
+    letter-spacing: 0.2rem;
+  }
+
 }
 
 </style>
