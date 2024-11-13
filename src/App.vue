@@ -6,7 +6,7 @@ import { onMounted, ref } from 'vue';
 const mobile = ref(null)
 const chickWidth = ()=>{
   const windowWidth = window.innerWidth;
-  if(windowWidth < 1670){
+  if(windowWidth < 840){
     mobile.value = true
 
   }else{
