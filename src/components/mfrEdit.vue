@@ -100,11 +100,12 @@ const updateMfrDate = async()=>{
 
         }
         input[type="submit"]{
-            padding: 0.5rem 2rem;
+            padding: 0.5rem 1rem;
             border-radius: 2rem;
             border: black 2px solid;
 
             background-color: transparent;
+            color: black;
             &:hover{
                 background-color: $pointColor;
                 color: white;

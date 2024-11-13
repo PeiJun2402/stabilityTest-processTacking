@@ -396,19 +396,19 @@ watch(() => [
     if (button1 === true && button2 === true && button3 === true && button4 === true && button5 === true) {
       testStageRecord.value.testStage = "Finished";
     }
-    if (button1 === false && button2 ===false && button3 === false && button4 === false && button5 === false) {
+    if (button1 === false && button2 ===false && button3 === false && button4 === false && button5 === false ) {
       testStageRecord.value.testStage = "未執行";
     }
-    if (button1 === true && button2 ===false && button3 === false && button4 === false && button5 === false) {
+    if (button1 === true && button2 ===false && button3 === false && button4 === false && button5 === false || button1 === false && button2 === true && button3 === true && button4 === true && button5 === true) {
       testStageRecord.value.testStage = "Test1";
     }
-    if (button1 === true && button2 ===true && button3 === false && button4 === false && button5 === false) {
+    if (button1 === true && button2 ===true && button3 === false && button4 === false && button5 === false || button1 === true && button2 === false && button3 === true && button4 === true && button5 === true) {
       testStageRecord.value.testStage = "Test2";
     }
-    if (button1 === true && button2 ===true && button3 === true && button4 === false && button5 === false) {
+    if (button1 === true && button2 ===true && button3 === true && button4 === false && button5 === false || button1 === true && button2 === true && button3 === false && button4 === true && button5 === true) {
       testStageRecord.value.testStage = "Test3";
     }
-    if (button1 === true && button2 ===true && button3 === true && button4 === true && button5 === false) {
+    if (button1 === true && button2 ===true && button3 === true && button4 === true && button5 === false || button1 === true && button2 === true && button3 === true && button4 === false && button5 === true) {
       testStageRecord.value.testStage = "Test4";
     }
 
