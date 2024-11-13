@@ -1,14 +1,13 @@
 import { createRouter , createWebHistory }from 'vue-router'
 
-import Development from '@/view/Development.vue';  
-import Sale from '@/view/Sale.vue';  
-import Manufacture from '@/view/Manufacture.vue';  
-import ApplyTestForm from '@/view/ApplyTestForm.vue';  
-import EditForm from '@/view/EditForm.vue'
-import TestStageRecord from '@/view/TestStageRecord.vue'
+// import Development from '@/view/Development.vue';  
+// import Sale from '@/view/Sale.vue';  
+// import Manufacture from '@/view/Manufacture.vue';  
+// import ApplyTestForm from '@/view/ApplyTestForm.vue';  
+// import EditForm from '@/view/EditForm.vue'
+// import TestStageRecord from '@/view/TestStageRecord.vue'
 import HomePage from '@/view/HomePage.vue'
-import NotFoundPage from '@/view/NotFoundPage.vue'
-import FinishTestForm from '@/view/FinishTestForm.vue'
+
 
 
 const router = createRouter({
@@ -22,35 +21,35 @@ const router = createRouter({
         },
         { path:'/development',
         name:'Development',
-        component:Development 
+        component:()=>import('@/view/Development.vue')
         },
         { path:'/sale',
         name:'Sale',
-        component:Sale 
+        component:()=>import('@/view/Sale.vue') 
         },
         { path:'/manufacture',
         name:'Manufacture',
-        component: Manufacture
+        component:()=>import('@/view/Manufacture.vue')
         },
         { path:'/applyTestForm',
         name:'ApplyTestForm',
-        component: ApplyTestForm
+        component: ()=>import('@/view/ApplyTestForm.vue')
         },
         { path:'/editForm/:id',
         name:'EditForm',
-        component: EditForm
+        component: ()=>import('@/view/EditForm.vue')
         },
         { path:'/testStageRecord/:id',
         name:'TestStageRecord',
-        component: TestStageRecord
+        component: ()=>import('@/view/TestStageRecord.vue')
         },
         { path:'/FinishTestForm/:id',
         name:'FinishTestForm',
-        component: FinishTestForm
+        component: ()=>import('@/view/FinishTestForm.vue')
         },
         { path:'/:catchAll(.*)',
         name:'NotFoundPage',
-        component: NotFoundPage
+        component:()=>import( '@/view/NotFoundPage.vue')
         },
 
     ]
