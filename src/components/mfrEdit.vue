@@ -100,7 +100,7 @@ const updateMfrDate = async()=>{
 
         }
         input[type="submit"]{
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 2rem;
             border-radius: 2rem;
             border: black 2px solid;
 
